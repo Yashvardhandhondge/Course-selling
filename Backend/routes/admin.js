@@ -1,15 +1,16 @@
 const {Router} = require('express');
 const { z } = require('zod');
-const { usermodel, adminmodel, course} = require('../db');
+const {adminModel}= require('../db')
 const adminRouter = Router();
 const bcrypt = require('bcrypt')
 const {Jwt_admin_secrte} = require('../config')
 const jwt = require('jsonwebtoken')
 const {app} = require('../middleware/adminmiddleware')
+const multer = require('multer');
+const { admincourse } = require('./admincourses');
 // const adminRouter = express.Router()
-adminRouter.get("/check", res => {
-    res.res.send("Healthy")
-})
+
+adminRouter.use('/course',admincourse)
 
 adminRouter.post('/signup',async function(req,res){
     try{
@@ -17,7 +18,8 @@ adminRouter.post('/signup',async function(req,res){
             email:z.string().min(3).max(100).email(),
             password:z.string().min(1).max(30),
             firstname:z.string().min(3).max(30),
-            lastname:z.string().min(3).max(100)
+            lastname:z.string().min(3).max(100),
+            image:z.string().optional()
           })
 
           const parsedbody = await requiredbody.safeParse(req.body);
@@ -30,15 +32,16 @@ adminRouter.post('/signup',async function(req,res){
             return
           }
       
-          const {email,password,firstname,lastname}=req.body;
+          const {email,password,firstname,lastname,image}=req.body;
 
           const hashedpassword =await bcrypt.hash(password,5)
           
-          const admin = await adminmodel.create({
+          const admin = await adminModel.create({
               email:email,
               password : hashedpassword,
               firstname:firstname,
-              lastname : lastname
+              lastname : lastname,
+              image:image
           })
 
           if(admin){
@@ -55,6 +58,9 @@ adminRouter.post('/signup',async function(req,res){
     }
 
 })
+
+
+
 adminRouter.post('/signin',async function(req,res){
     try{
 
@@ -75,7 +81,7 @@ adminRouter.post('/signin',async function(req,res){
    
         const {email,password} = req.body;
         
-        const admin = await adminmodel.findOne({email})
+        const admin = await adminModel.findOne({email})
 
         if(!admin){
             return res.status(404).json({
@@ -107,99 +113,57 @@ adminRouter.post('/signin',async function(req,res){
     }
 })
 
-
-adminRouter.post('/courses',app,async function(req,res){
-  try{
-   const requiredbody = z.object({
-    title :z.string(),
-    description:z.string(),
-    imageUrl : z.string(),
-    price:z.string(),
-    category:z.string(),
-    difficulty:z.string()
-   })
-
-   const parsedbody = requiredbody.safeParse(req.body);
-   if(!parsedbody.success){
-    res.status(404).json({
-        message:"You have entered something wrong",
-        error : parsedbody.error
-    })
-    return
-   }
-   const adminId = req.userId
-   const {title, description,imageUrl,price,category,difficulty} = req.body;
-   
-   const courses = await course.create({
-      title : title,
-      description:description,
-      imageUrl:imageUrl,
-      price:price,
-      creatorId:adminId,
-      category:category,
-      difficulty:difficulty      
-   })
-
-   if(courses){
-       res.status(200).json({
-        message:"Course craeted ",
-        courses,
-        id:courses._id
-       })
-   }
-  } catch(e){
-     console.error(e)
-  }   
-})
-
-adminRouter.put('/courses',app,async function(req,res){
+adminRouter.put("/update",app,async function(req,res){
     try{
-        const adminId = req.userId;
-        const {title,description,imageUrl,price,courseId,category,difficulty} = req.body;
-        const courses = await course.updateOne({
-            _id:courseId,
-            creatorId:adminId
-        },{
-            title:title,
-            description:description,
-            imageUrl:imageUrl,
-            price:price,
-            category:category,
-            difficulty:difficulty
-        },{
-            new : true
+        const requiredbody= z.object({
+            email:z.string().min(3).max(100).email().optional(),
+            password:z.string().min(1).max(30).optional(),
+            firstname:z.string().min(3).max(30).optional(),
+            lastname:z.string().min(3).max(100).optional(),
+            image:z.string().optional()
         })
-        
-        if(courses){
-           res.status(200).json({
-            message:"Course updated successfully",
-            courses
-           })
+
+        const parsedbody = requiredbody.safeParse(req.body);
+        if(!parsedbody.success){
+            res.status(400).json({
+                message:"You have entered something wrong",
+                error : parsedbody.error
+            })
+            return
+        }
+        const amdinid = req.userId
+        const {email,password,firstname,lastname,image} = req.body;
+
+        const updatedbody = await adminmodel.findByIdAndUpdate({
+          _id : amdinid
+        },{
+            email:email,
+            password:password,
+            firstname:firstname,
+            lastname:lastname,
+            image:image
+        },{
+            new:true
+        })
+
+        if(updatedbody){
+            res.status(200).json({
+                message:"Admin Updated successfully",
+                updatedbody:updatedbody
+            })
+        }else{
+            res.status(400).json({
+                message:"User not updated"
+            })
         }
     }catch(e){
-    console.error(e)
+  console.error(e)
     }
-
 })
 
-adminRouter.get('/courses',app,async function(req,res){
-    try{
-     const adminId = req.userId;
-     const courses = await course.find({
-        creatorId:adminId
-     });
-     if(course){
-        res.status(200).json({
-            message:"Here are your courses",
-            courses
 
-        })
-     }
-    }catch(e){
-       console.error(e)
-    }
-    
-})
+
+
 module.exports={
     adminRouter : adminRouter
 }
