@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken')
 const {app} = require('../middleware/adminmiddleware')
 const multer = require('multer');
 const { admincourse } = require('./admincourses');
-// const adminRouter = express.Router()
+
 
 adminRouter.use('/course',admincourse)
 
@@ -134,7 +134,7 @@ adminRouter.put("/update",app,async function(req,res){
         const amdinid = req.userId
         const {email,password,firstname,lastname,image} = req.body;
 
-        const updatedbody = await adminmodel.findByIdAndUpdate({
+        const updatedbody = await adminModel.findByIdAndUpdate({
           _id : amdinid
         },{
             email:email,
@@ -157,8 +157,45 @@ adminRouter.put("/update",app,async function(req,res){
             })
         }
     }catch(e){
-  console.error(e)
+          console.error(e)
     }
+})
+
+adminRouter.delete('/delete',app,async function(req,res){
+   try{
+    const requiredbody= z.object({
+        email:z.string().min(3).max(100).email().optional(),
+    })
+
+    const parsedbody = requiredbody.safeParse(req.body);
+    if(!parsedbody.success){
+        res.status(400).json({
+            message:"You have entered something wrong",
+            error : parsedbody.error
+        })
+        return
+    } 
+    const adminId = req.userId
+    const {email} = req.body;
+
+    const delteuser = await adminModel.findByIdAndDelete({
+        _id:adminId,
+        email:email
+    });
+
+    if(delteuser){
+        res.status(200).json({
+            message:"User delted successfully",
+            delteuser:delteuser
+        })
+    }else{
+        res.status(404).json({
+            message:"something error occured",
+        })
+    }
+   }catch(e){
+    console.error(e)
+   }
 })
 
 

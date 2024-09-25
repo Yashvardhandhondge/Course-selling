@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const { Jwt_admin_secrte } = require('../config');
 
 function app(req, res, next) {
-    const token = req.headers.token; // Token should come from headers
+    const token = req.headers.token; 
 
     if (!token) {
         return res.status(401).json({
@@ -12,10 +12,10 @@ function app(req, res, next) {
     }
 
     try {
-        const decoded = jwt.verify(token, Jwt_admin_secrte); // Verify token
+        const decoded = jwt.verify(token, Jwt_admin_secrte); 
 
         if (decoded) {
-            req.userId = decoded.id; // Attach user ID to request object
+            req.userId = decoded.id; 
             next();
         } else {
             res.status(401).json({
