@@ -5,13 +5,12 @@ const userRouter = Router();
 const bcrypt = require('bcrypt')
 const {Jwt_user_secrte} = require('../config')
 const jwt = require('jsonwebtoken')
-const {app} = require('../middleware/adminmiddleware')
+const {usermiddleware} = require('../middleware/usermiddleware')
 
 
 
-adminRouter.use('/course',admincourse)
 
-adminRouter.post('/signup',async function(req,res){
+userRouter.post('/signup',async function(req,res){
     try{
           const requiredbody = z.object({
             email:z.string().min(3).max(100).email(),
@@ -35,7 +34,7 @@ adminRouter.post('/signup',async function(req,res){
 
           const hashedpassword =await bcrypt.hash(password,5)
           
-          const admin = await adminModel.create({
+          const user = await userModel.create({
               email:email,
               password : hashedpassword,
               firstname:firstname,
@@ -43,12 +42,12 @@ adminRouter.post('/signup',async function(req,res){
               image:image
           })
 
-          if(admin){
+          if(user){
             res.status(200).json({
                 message:"User Created successfully",
-                admin,
-                id:admin._id,
-               craetedAt: admin.createdAt
+                user,
+                id:user._id,
+               craetedAt: user.createdAt
             })
           }
     }catch(e){
@@ -60,7 +59,7 @@ adminRouter.post('/signup',async function(req,res){
 
 
 
-adminRouter.post('/signin',async function(req,res){
+userRouter.post('/signin',async function(req,res){
     try{
 
         const requiredbody = z.object({
@@ -80,14 +79,14 @@ adminRouter.post('/signin',async function(req,res){
    
         const {email,password} = req.body;
         
-        const admin = await adminModel.findOne({email})
+        const user = await userModel.findOne({email})
 
-        if(!admin){
+        if(!user){
             return res.status(404).json({
-                message:"Admin not found"
+                message:"user not found"
             })
         }
-        const correctpassowrd = await bcrypt.compare(password,admin.password);
+        const correctpassowrd = await bcrypt.compare(password,user.password);
          if(!correctpassowrd){
            res.status(400).json({
                message:`You have entered wrong password ${password}`,
@@ -95,14 +94,14 @@ adminRouter.post('/signin',async function(req,res){
          }else{
 
      const token = await jwt.sign({
-        id:admin._id
-     },Jwt_admin_secrte)
+        id:user._id
+     },Jwt_user_secrte)
 
            res.status(200).json({
                alert:"Password verified successfully",
                message:'You have logged in',
-               admin,
-               id:admin._id,
+               user,
+               id:user._id,
                token:token,
            })
          }
@@ -112,7 +111,7 @@ adminRouter.post('/signin',async function(req,res){
     }
 })
 
-adminRouter.put("/update",app,async function(req,res){
+userRouter.put("/update",usermiddleware,async function(req,res){
     try{
         const requiredbody= z.object({
             email:z.string().min(3).max(100).email().optional(),
@@ -130,24 +129,37 @@ adminRouter.put("/update",app,async function(req,res){
             })
             return
         }
-        const amdinid = req.userId
-        const {email,password,firstname,lastname,image} = req.body;
+        const userid = req.userId
+        const {email,firstname,lastname,image,password} = req.body;
 
-        const updatedbody = await adminModel.findByIdAndUpdate({
-          _id : amdinid
-        },{
-            email:email,
-            password:password,
-            firstname:firstname,
-            lastname:lastname,
-            image:image
-        },{
-            new:true
+        const UpdateData = {};
+        if(email){
+          UpdateData.email = email
+        }
+        if(firstname){
+          UpdateData.firstname = firstname
+        }
+        if(lastname){
+          UpdateData.lastname = lastname
+        }
+        if(image){
+          UpdateData.image = image
+        }
+        if(password){
+          const hashedpassword =await bcrypt.hash(password,5);
+          UpdateData.password = hashedpassword
+        }
+
+        const updatedbody = await userModel.findByIdAndUpdate(
+          userid
+        ,UpdateData,
+        {
+          new:true
         })
 
         if(updatedbody){
             res.status(200).json({
-                message:"Admin Updated successfully",
+                message:"User Updated successfully",
                 updatedbody:updatedbody
             })
         }else{
@@ -160,7 +172,7 @@ adminRouter.put("/update",app,async function(req,res){
     }
 })
 
-adminRouter.delete('/delete',app,async function(req,res){
+userRouter.delete('/delete',usermiddleware,async function(req,res){
    try{
     const requiredbody= z.object({
         email:z.string().min(3).max(100).email().optional(),
@@ -174,11 +186,11 @@ adminRouter.delete('/delete',app,async function(req,res){
         })
         return
     } 
-    const adminId = req.userId
+    const userId = req.userId
     const {email} = req.body;
 
-    const delteuser = await adminModel.findByIdAndDelete({
-        _id:adminId,
+    const delteuser = await userModel.findByIdAndDelete({
+        _id:userId,
         email:email
     });
 
@@ -201,5 +213,5 @@ adminRouter.delete('/delete',app,async function(req,res){
 
 
 module.exports={
-    adminRouter : adminRouter
+    userRouter:userRouter
 }

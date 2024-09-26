@@ -134,15 +134,27 @@ adminRouter.put("/update",app,async function(req,res){
         const amdinid = req.userId
         const {email,password,firstname,lastname,image} = req.body;
 
-        const updatedbody = await adminModel.findByIdAndUpdate({
-          _id : amdinid
-        },{
-            email:email,
-            password:password,
-            firstname:firstname,
-            lastname:lastname,
-            image:image
-        },{
+        const UpdateBody = {};
+        if(email){
+            UpdateBody.email = email;
+        }
+        if(firstname){
+            UpdateBody.firstname = firstname;
+        }
+        if(lastname){
+            UpdateBody.lastname = lastname;
+        }
+        if(image){
+            UpdateBody.image = image;
+        }
+        if(password){
+            const hashedpassword =  await bcrypt.hash(password,5);
+            UpdateBody.password = hashedpassword
+        }
+        const updatedbody = await adminModel.findByIdAndUpdate(
+            amdinid,
+            UpdateBody,
+            {
             new:true
         })
 
