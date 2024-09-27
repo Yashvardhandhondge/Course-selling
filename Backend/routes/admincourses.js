@@ -1,6 +1,7 @@
 const {Router} = require('express');
 const {app} = require('../middleware/adminmiddleware')
-const {adminmodel,course} = require('../db')
+const {adminmodel,course} = require('../db');
+const { z } = require('zod');
 const admincourse = Router();
 
 admincourse.post('/create',app,async function(req,res){
@@ -45,6 +46,32 @@ admincourse.post('/create',app,async function(req,res){
        } catch(e){
           console.error(e)
        }  
+})
+
+admincourse.put('/add-lesson',async function(req,res){
+    try{
+      const lessonSchema = z.object({
+        courseId : z.string(),
+        lesson:z.array(
+            z.object({
+                title:z.string(),
+                content:z.string().optional(),
+                videoUrl:z.string().optional(),
+                duration:z.number().optional()
+            })
+        )
+      })
+
+      const parsedbody = lessonSchema.safeParse(req.body);
+      if(!parsedbody){
+        return res.status(400).json({
+            message:"Invalid lesson data",
+            error:parsedbody.error
+        })
+      }
+    }catch(e){
+        console.error(e)
+    }
 })
 
 admincourse.put('/update',async function(req,res){

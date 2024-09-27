@@ -10,7 +10,10 @@ console.log(process.env.MONGO_URL)
 
 const {adminRouter} = require('./routes/admin');
 const {userRouter} = require('./routes/user');
-
+const {courseRoute} = require('./routes/course');
+const {Enrollementroutes} = require('./routes/enrollement');
+app.use('/enroll',Enrollementroutes)
+app.use('/',courseRoute)
 app.use('/user',userRouter)
 app.use('/admin',adminRouter)
 

@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt')
 const {Jwt_admin_secrte} = require('../config')
 const jwt = require('jsonwebtoken')
 const {app} = require('../middleware/adminmiddleware')
-const multer = require('multer');
+
 const { admincourse } = require('./admincourses');
 
 
