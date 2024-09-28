@@ -10,6 +10,13 @@ const userSchema = new mongoose.Schema({
     image: String
 }, { timestamps: true });
 
+const adminSchema = new mongoose.Schema({
+    email: { type: String, index: true, unique: true },
+    password: String,
+    firstname: String,
+    lastname: String,
+    image: String
+}, { timestamps: true });
 
 const lessonSchema = new mongoose.Schema({
     title: String,
@@ -19,13 +26,6 @@ const lessonSchema = new mongoose.Schema({
 }, { timestamps: true });
 
 
-const adminSchema = new mongoose.Schema({
-    email: { type: String, index: true, unique: true },
-    password: String,
-    firstname: String,
-    lastname: String,
-    image: String
-}, { timestamps: true });
 
 const courseSchema = new mongoose.Schema({
     title: String,

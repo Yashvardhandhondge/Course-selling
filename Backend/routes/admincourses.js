@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const {app} = require('../middleware/adminmiddleware')
-const {adminmodel,course} = require('../db');
+const {courseModel} = require('../db');
 const { z } = require('zod');
 const admincourse = Router();
 
@@ -26,7 +26,7 @@ admincourse.post('/create',app,async function(req,res){
         const adminId = req.userId
         const {title, description,imageUrl,price,category,difficulty} = req.body;
         
-        const courses = await course.create({
+        const courses = await courseModel.create({
            title : title,
            description:description,
            imageUrl:imageUrl,
@@ -48,7 +48,7 @@ admincourse.post('/create',app,async function(req,res){
        }  
 })
 
-admincourse.put('/add-lesson',async function(req,res){
+admincourse.put('/add-lesson',app,async function(req,res){
     try{
       const lessonSchema = z.object({
         courseId : z.string(),
@@ -69,6 +69,25 @@ admincourse.put('/add-lesson',async function(req,res){
             error:parsedbody.error
         })
       }
+
+      const {courseId,lesson} = req.body;
+
+      const updatedCourses = await courseModel.findByIdAndUpdate(
+         courseId,         
+        {$push:{lessons:{$each:lesson}}},
+        {new:true,useFindAndModify: false}
+    )
+
+    if(updatedCourses){
+        res.status(200).json({
+            message:"Lesson added successfuly",
+            updatedCourses
+        })
+    }else{
+        res.status(404).json({
+            message:"Course not found"
+        })
+    }
     }catch(e){
         console.error(e)
     }
@@ -78,7 +97,7 @@ admincourse.put('/update',async function(req,res){
     try{
         const adminId = req.userId;
         const {title,description,imageUrl,price,courseId,category,difficulty} = req.body;
-        const courses = await course.updateOne({
+        const courses = await courseModel.updateOne({
             _id:courseId,
             creatorId:adminId
         },{
@@ -103,13 +122,14 @@ admincourse.put('/update',async function(req,res){
     } 
 })
 
-admincourse.get('/get',async function(req,res){
+admincourse.get('/get',app,async function(req,res){
     try{
         const adminId = req.userId;
-        const courses = await course.find({
+
+        const courses = await courseModel.find({
            creatorId:adminId
         });
-        if(course){
+        if(courseModel){
            res.status(200).json({
                message:"Here are your courses",
                courses

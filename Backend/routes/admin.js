@@ -1,6 +1,6 @@
 const {Router} = require('express');
 const { z } = require('zod');
-const {adminModel}= require('../db')
+const {adminModel,courseModel}= require('../db')
 const adminRouter = Router();
 const bcrypt = require('bcrypt')
 const {Jwt_admin_secrte} = require('../config')
