@@ -12,6 +12,12 @@ const {adminRouter} = require('./routes/admin');
 const {userRouter} = require('./routes/user');
 const {courseRoute} = require('./routes/course');
 const {Enrollementroutes} = require('./routes/enrollement');
+const {SearchRoute} = require('./routes/Search')
+const {WishlistRoute} = require('./routes/Wishlist') 
+const {reviewsRoute} = require('./routes/review')
+app.use('/review',reviewsRoute)
+app.use('/search',SearchRoute)
+app.use('/wishlist',WishlistRoute)
 app.use('/enroll',Enrollementroutes)
 app.use('/',courseRoute)
 app.use('/user',userRouter)

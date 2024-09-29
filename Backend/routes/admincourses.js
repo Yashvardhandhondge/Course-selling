@@ -24,7 +24,7 @@ admincourse.post('/create',app,async function(req,res){
          return
         }
         const adminId = req.userId
-        const {title, description,imageUrl,price,category,difficulty} = req.body;
+        const {title, description,imageUrl,price,category,difficulty,level,tags} = req.body;
         
         const courses = await courseModel.create({
            title : title,
@@ -33,7 +33,9 @@ admincourse.post('/create',app,async function(req,res){
            price:price,
            creatorId:adminId,
            category:category,
-           difficulty:difficulty      
+           difficulty:difficulty,
+           level:level,
+           tags:tags      
         })
      
         if(courses){
@@ -96,7 +98,7 @@ admincourse.put('/add-lesson',app,async function(req,res){
 admincourse.put('/update',async function(req,res){
     try{
         const adminId = req.userId;
-        const {title,description,imageUrl,price,courseId,category,difficulty} = req.body;
+        const {title,description,imageUrl,price,courseId,category,difficulty,level,tags} = req.body;
         const courses = await courseModel.updateOne({
             _id:courseId,
             creatorId:adminId
@@ -106,7 +108,9 @@ admincourse.put('/update',async function(req,res){
             imageUrl:imageUrl,
             price:price,
             category:category,
-            difficulty:difficulty
+            difficulty:difficulty,
+            level:level,
+            tags:tags
         },{
             new : true
         })
@@ -139,6 +143,31 @@ admincourse.get('/get',app,async function(req,res){
        }catch(e){
           console.error(e)
        }
+})
+
+admincourse.delete('/delte',app,async function(req,res){
+    try{
+    const adminId = req.userId;
+    const courseId = req.body.courseId;
+
+    const coursedelteion = await courseModel.deleteOne({
+        creatorId:adminId,
+        courseId:courseId
+    })
+
+    if(coursedelteion){
+        return res.status(200).json({
+            message:"Course deleted successfully",
+            courseId
+        })
+    }else{
+        return res.status(400).json({
+            message:"Something went wrong in deletion"
+        })
+    }
+    }catch(e){
+
+    }
 })
 
 module.exports={
