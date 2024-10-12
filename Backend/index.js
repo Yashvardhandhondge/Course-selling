@@ -27,7 +27,7 @@ client.connect()
     .catch((err) => {
         console.error('Redis connection error:', err);
     });
-
+console.log(process.env.API_KEY)
 
 const { adminRouter } = require('./routes/admin');
 const { userRouter } = require('./routes/user');
@@ -36,8 +36,8 @@ const { Enrollementroutes } = require('./routes/enrollement');
 const { SearchRoute } = require('./routes/Search');
 const { WishlistRoute } = require('./routes/Wishlist');
 const { reviewsRoute } = require('./routes/review');
-
-
+const {router} = require('./routes/Chatbot')
+app.use('/chatbot',router)
 app.use('/review', reviewsRoute);
 app.use('/search', SearchRoute);
 app.use('/wishlist', WishlistRoute);
