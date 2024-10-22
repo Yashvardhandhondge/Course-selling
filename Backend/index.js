@@ -2,11 +2,16 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { createClient } = require('redis');
 require('dotenv').config();
-
+const cors = require('cors');
 const app = express();
-app.use(express.json());
+app.use(express.json({limit:'10mb'}));
 const port = 3000;
 
+app.use(cors({
+    origin: 'http://localhost:5173', // Adjust this to match your frontend's origin
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true // Enable cookies or other credentials if needed
+  }));
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -37,6 +42,8 @@ const { SearchRoute } = require('./routes/Search');
 const { WishlistRoute } = require('./routes/Wishlist');
 const { reviewsRoute } = require('./routes/review');
 const {router} = require('./routes/Chatbot')
+const {analyticsRoute} = require('./routes/Analytics');
+app.use('/analyis',analyticsRoute)
 app.use('/chatbot',router)
 app.use('/review', reviewsRoute);
 app.use('/search', SearchRoute);

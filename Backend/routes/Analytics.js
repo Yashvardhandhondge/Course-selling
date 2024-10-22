@@ -28,3 +28,6 @@ analyticsRoute.get('/user-activity',usermiddleware,async function(req,res){
         res.status(500).json({message:'Error fetching user activity logs'})
      }
 })
+module.exports ={
+  analyticsRoute
+}

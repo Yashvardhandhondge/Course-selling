@@ -42,11 +42,23 @@ userRouter.post('/signup',async function(req,res){
               lastname : lastname,
               image:image
           })
+           
+     const token = await jwt.sign({
+        id:user._id
+     },Jwt_user_secrte)
+    
+     
+     await ActivityLogModel.create({
+        userId:user._id,
+        action:'Signup',
+        details:`User Signed up at ${new Date().toLocaleString()}`,
+     })
 
           if(user){
             await sendWelcomeEmail(user.email,user.firstname)
             res.status(200).json({
                 message:"User Created successfully",
+                token,
                 user,
                 id:user._id,
                craetedAt: user.createdAt
