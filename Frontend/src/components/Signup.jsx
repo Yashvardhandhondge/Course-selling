@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { userAPI } from '../services/userAPi'; 
 import imageCompression from 'browser-image-compression';
 import { Link } from 'react-router-dom';
+
+
 const Signup = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -162,6 +164,7 @@ const Signup = () => {
           </div>
         </div>
       </div>
+      
     </div>
   );
 };
