@@ -56,16 +56,16 @@ function HomePage()  {
                     {showAdminOptions && (
                         <div className="absolute left-0 mt-2 w-40 bg-white shadow-lg rounded-md">
                             <Link
-                                to="/admin/signup"
-                                className="block px-4 py-2 text-red-500 hover:bg-red-50 hover:text-red-700 transition duration-300"
-                            >
-                                Admin Sign Up
-                            </Link>
-                            <Link
                                 to="/admin/signin"
                                 className="block px-4 py-2 text-red-500 hover:bg-red-50 hover:text-red-700 transition duration-300"
                             >
                                 Admin Sign In
+                            </Link>
+                            <Link
+                                to="/admin/signup"
+                                className="block px-4 py-2 text-red-500 hover:bg-red-50 hover:text-red-700 transition duration-300"
+                            >
+                                Admin Sign Up
                             </Link>
                         </div>
                     )}

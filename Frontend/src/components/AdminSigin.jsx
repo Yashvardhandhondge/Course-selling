@@ -35,65 +35,69 @@ const AdminSignin = () => {
   };
 
   return (
-    <div className="min-h-screen w-full bg-gray-100 text-gray-900 flex justify-center">
-      <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
-        <div className="lg:w-1/2 xl:w-5/12 p- sm:p-10">
-          <div className="text-center">
-            <div className="text-4xl font-extrabold text-indigo-500">Learn Spot</div>
+    <div className="bg-white relative lg:py-20 min-h-screen flex items-center justify-center">
+      <div className="flex flex-col lg:flex-row items-center justify-between max-w-7xl mx-auto xl:px-5 lg:px-10 w-full">
+        {/* Image Section */}
+        <div className="w-full lg:w-7/12 max-w-md lg:max-w-2xl">
+          <div className="flex justify-center lg:justify-end w-full h-full">
+            <img
+              src="https://res.cloudinary.com/macxenon/image/upload/v1631570592/Run_-_Health_qcghbu.png"
+              alt="Admin Illustration"
+              className="w-full lg:w-auto"
+            />
           </div>
-
-          <div className="mt-8 flex flex-col items-center">
-            <h1 className="text-2xl xl:text-3xl font-extrabold">Sign In</h1>
-            <form className="w-full flex-1 mt-8" onSubmit={handleSubmit}>
+        </div>
+        
+        {/* Sign-in Form Section */}
+        <div className="w-full lg:w-5/12 mt-12 lg:mt-0">
+          <div className="p-10 bg-white shadow-2xl rounded-xl">
+            <h1 className="text-4xl font-serif text-center font-medium mb-6">Sign In</h1>
+            <form onSubmit={handleSubmit} className="space-y-8">
               {message && <div className="text-green-600 mb-4">{message}</div>}
               {error && <div className="text-red-600 mb-4">{error}</div>}
 
-              <div className="mx-auto max-w-xs space-y-6">
-                <div>
-                  <label className="text-gray-800 text-sm mb-2 block">Email</label>
-                  <input
-                    name="email"
-                    type="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    placeholder="Enter email"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="text-gray-800 text-sm mb-2 block">Password</label>
-                  <input
-                    name="password"
-                    type="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                    placeholder="Enter password"
-                    required
-                  />
-                </div>
+              {/* Email Field */}
+              <div className="relative">
+                <label className="text-gray-600 font-medium bg-white px-2 -mt-3 absolute ml-2">Email</label>
+                <input
+                  name="email"
+                  type="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="123@ex.com"
+                  className="border placeholder-gray-400 focus:outline-none focus:border-black w-full p-4 text-base block bg-white border-gray-300 rounded-md mt-2"
+                  required
+                />
               </div>
 
+              {/* Password Field */}
+              <div className="relative">
+                <label className="text-gray-600 font-medium bg-white px-2 -mt-3 absolute ml-2">Password</label>
+                <input
+                  name="password"
+                  type="password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  placeholder="Password"
+                  className="border placeholder-gray-400 focus:outline-none focus:border-black w-full p-4 text-base block bg-white border-gray-300 rounded-md mt-2"
+                  required
+                />
+              </div>
+
+              {/* Sign-in Button */}
               <button
                 type="submit"
-                className="mt-5 w-full py-4 rounded-lg font-semibold bg-indigo-500 text-gray-100 hover:bg-indigo-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:outline-none"
+                className="w-full py-4 text-xl font-medium text-white bg-indigo-500 rounded-lg transition duration-200 hover:bg-indigo-600"
               >
                 Sign In
               </button>
 
-              <p className="mt-6 text-xs text-gray-600 text-center">
+              {/* Link to Sign-up */}
+              <p className="text-center text-xs text-gray-600 mt-6">
                 Don't have an account? 
-                <Link to="/admin/signup" className="text-indigo-500 border-b border-indigo-500 border-dotted"> Sign Up </Link>
+                <Link to="/admin/signup" className="text-indigo-500 border-b border-indigo-500 ml-1">Sign Up</Link>
               </p>
             </form>
-          </div>
-        </div>
-        
-        <div className="flex-1 bg-indigo-100 text-center hidden lg:flex">
-          <div className="m-12 xl:m-16 w-full bg-contain bg-center bg-no-repeat"
-            style={{ backgroundImage: 'url(https://storage.googleapis.com/devitary-image-host.appspot.com/15848031292911696601-undraw_designer_life_w96d.svg)' }}
-          >
           </div>
         </div>
       </div>
