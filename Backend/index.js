@@ -8,9 +8,9 @@ app.use(express.json({limit:'10mb'}));
 const port = 3000;
 
 app.use(cors({
-    origin: 'http://localhost:5173', // Adjust this to match your frontend's origin
+    origin: 'http://localhost:5173', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true // Enable cookies or other credentials if needed
+    credentials: true 
   }));
 
 const MONGO_URL = process.env.MONGO_URL;

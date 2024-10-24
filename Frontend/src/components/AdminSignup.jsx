@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { userAPI } from '../services/userAPi'; 
+import { adminAPI } from '../services/adminApi';
 import imageCompression from 'browser-image-compression';
 import { Link } from 'react-router-dom';
-const Signup = () => {
+const AdminSignup = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -56,7 +56,7 @@ const Signup = () => {
     }
 
     try {
-      const response = await userAPI.signup(formData);
+      const response = await adminAPI.signup(formData);
       setMessage(response.data.message);
     } catch (err) {
       setError(err.response?.data?.message || 'Signup failed.');
@@ -166,4 +166,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default AdminSignup;

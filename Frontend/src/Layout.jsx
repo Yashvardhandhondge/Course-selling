@@ -12,7 +12,7 @@ export default function RootLayout({
       <head />
       <body className="bg-white dark:bg-stone-900 min-h-screen flex flex-col">
         <ThemeProvider enableSystem={true} attribute="class">
-          <Navbar />
+          {/* <Navbar /> */}
           <main className="flex-grow">
             {children}
           </main>
