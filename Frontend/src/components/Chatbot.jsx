@@ -40,7 +40,7 @@ const Chatbot = ({ token }) => {
       {!showChat && (
         <button
           onClick={handleToggleChat}
-          className="bg-blue-600 text-white p-3 rounded-full shadow-lg focus:outline-none hover:bg-blue-500 transition-transform transform hover:scale-105"
+          className="bg-blue-400 text-white p-3 rounded-full shadow-lg focus:outline-none hover:bg-blue-500 transition-transform transform hover:scale-105"
         >
           Ask Us!
         </button>
@@ -48,7 +48,7 @@ const Chatbot = ({ token }) => {
 
       {showChat && (
         <div className="w-72 h-96 bg-white rounded-lg shadow-lg p-4 flex flex-col">
-          {/* Close Button */}
+        
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold">Chat with Us</h3>
             <button

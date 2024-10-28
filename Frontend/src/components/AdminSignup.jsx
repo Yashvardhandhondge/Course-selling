@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { adminAPI } from '../services/adminApi';
 import imageCompression from 'browser-image-compression';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 const AdminSignup = () => {
   const [formData, setFormData] = useState({
@@ -14,6 +14,7 @@ const AdminSignup = () => {
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -55,6 +56,11 @@ const AdminSignup = () => {
     try {
       const response = await adminAPI.signup(formData);
       setMessage(response.data.message);
+      const token = response.data.token;
+      if(token){
+        localStorage.setItem('token',token);
+        navigate('/admin/Landing')
+      }
     } catch (err) {
       setError(err.response?.data?.message || 'Signup failed.');
     }

@@ -15,7 +15,7 @@ function app(req, res, next) {
         const decoded = jwt.verify(token, Jwt_admin_secrte); 
 
         if (decoded) {
-            req.userId = decoded.id; 
+            req.adminId = decoded.id; 
             next();
         } else {
             res.status(401).json({

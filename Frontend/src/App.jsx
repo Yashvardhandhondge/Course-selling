@@ -9,15 +9,18 @@ import AdminSignup from './components/AdminSignup';
 import AdminSignin from './components/AdminSigin';
 import Signin from './components/Signin';
 import { authService } from './services/authservices';
+import UserLandingpage from './components/UserLandingpage'
+import AdminLandingPage from './components/AdminLandingPage';
+import AdminProfile from './components/AdminProfile';
 
 
-import RootLayout from './Layout';
+
 
 function App() {
   return (
   
     <Router>
-      <RootLayout>
+      
         <Routes >
           <Route exact path='/' element={<HomePage />} />
           <Route 
@@ -36,11 +39,20 @@ function App() {
           path='/admin/signin'
           element={authService.isAuthenticated()? <Navigate to='/' /> :<AdminSignin/> }
           />
-          
-
-
+          <Route
+          path='/user/Landing'
+          element={authService.isAuthenticated() ? <Navigate to='/'/> : <UserLandingpage/>}
+          />
+         <Route
+         path='/admin/Landing'
+         element={authService.isAuthenticated() ? <Navigate to='/'/> : <AdminLandingPage/>}
+         />
+         <Route
+         path='/admin/profile'
+         element={authService.isAuthenticated() ? <Navigate to='/' />:<AdminProfile/>}
+         ></Route>
         </Routes>
-      </RootLayout>
+    
     </Router>
   );
 }
