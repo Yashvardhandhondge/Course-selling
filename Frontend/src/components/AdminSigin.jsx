@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { adminAPI } from '../services/adminApi';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 
 const AdminSignin = () => {
   const [formData, setFormData] = useState({
@@ -10,7 +10,7 @@ const AdminSignin = () => {
 
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -26,11 +26,17 @@ const AdminSignin = () => {
       return;
     }
 
+   
     try {
       const response = await adminAPI.signin(formData);
       setMessage(response.data.message);
+      const token = response.data.token;
+      if(token){
+        localStorage.setItem('token',token);
+        navigate('/admin/Landing')
+      }
     } catch (err) {
-      setError(err.response?.data?.message || 'Signin failed.');
+      setError(err.response?.data?.message || 'Signup failed.');
     }
   };
 

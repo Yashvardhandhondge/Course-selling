@@ -10,7 +10,7 @@ const navigate = useNavigate()
     }
   return (
     <div>
-    <div className="text-3xl flex justify-start  ">
+    <div className="text-3xl p-2 flex justify-start  ">
         <Link to='/admin/landing' className='text-white flex'>
              <PiBasketballBold className='text-blue-500 h-10 mr-5' /> Koursely  </Link>
              <div className="h-[40px] border-r border-r-white ml-8 max-h-screen ">.</div>

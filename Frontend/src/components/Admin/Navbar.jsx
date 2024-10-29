@@ -1,7 +1,7 @@
 import { PiBasketballBold } from "react-icons/pi";
 import { Link,useNavigate } from "react-router-dom";
 import { adminAPI } from "../../services/adminApi";
-
+import Koursely from "./Koursely";
 
 import React, { useEffect, useState } from 'react'
 
@@ -34,8 +34,7 @@ navigate('/login')
   return (
     <div>
    <div className="text-3xl flex justify-start  ">
-            <PiBasketballBold className='text-blue-500 h-10 mr-5' /> <p className="text-3xl text-white">Koursely</p>  
-            <div className="h-full border-r border-r-white ml-11 ">.</div>
+   <Koursely/>
             <div className="text-white ml-[300px]">Admin Dashborad </div>
          <div className=" ml-[200px]  space-x-4">
          {profile && (
@@ -51,7 +50,7 @@ navigate('/login')
           </Link>
         )}
          </div>
-            <button onClick={handlelogout} className="bg-blue-400 font-serif text-sm text-black ml-[200px] shadow border-blue-400 px-4 rounded hover:bg-black hover:text-white border border-solid">Logout</button>
+            <button onClick={handlelogout} className="bg-blue-400 font-serif text-sm text-black ml-[200px] shadow border-blue-400 px-6 py-3 rounded hover:bg-black hover:text-white border border-solid">Logout</button>
             </div>  
             
 

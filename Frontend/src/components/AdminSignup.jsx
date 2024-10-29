@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { adminAPI } from '../services/adminApi';
 import imageCompression from 'browser-image-compression';
 import { Link,useNavigate } from 'react-router-dom';
-
+import { PiBasketballBold } from "react-icons/pi";
 const AdminSignup = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -67,91 +67,87 @@ const AdminSignup = () => {
   };
 
   return (
-    <div className="bg-white relative lg:py-20">
-      <div className="flex flex-col items-center justify-between pt-0 pr-10 pb-0 pl-10 mt-0 mr-auto mb-0 ml-auto max-w-7xl xl:px-5 lg:flex-row">
-        <div className="flex flex-col items-center w-full pt-5 pr-10 pb-20 pl-10 lg:pt-20 lg:flex-row">
-          <div className="w-full bg-cover relative max-w-md lg:max-w-2xl lg:w-7/12">
+    <div className="bg-black  ">
+      <div className='flex'>
+       <PiBasketballBold className='text-blue-500  text-5xl p-2' /> <p className="text-3xl mt-1 font-serif text-white">Koursely</p>  
+
+       </div>
+      <div className='border-t-[1px] border-zinc-700 mt-2 flex justify-center '></div>
+      <div className=" ">
+        <div className="flex ">
+          <div >
             <div className="flex flex-col items-center justify-center w-full h-full relative lg:pr-10">
               <img
-                src="https://res.cloudinary.com/macxenon/image/upload/v1631570592/Run_-_Health_qcghbu.png"
-                className="btn-"
+                src="https://static.vecteezy.com/system/resources/thumbnails/047/732/611/large/glowing-looping-world-teacher-day-children-giving-flowers-and-gifts-to-a-smiling-teacher-neon-frame-effect-black-background-free-video.jpg"
+                className="btn- "
                 alt="Sign up illustration"
               />
             </div>
           </div>
           <div className="w-full mt-20 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
-            <div className="flex flex-col items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-white shadow-2xl rounded-xl relative z-10">
-              <p className="w-full text-4xl font-medium text-center leading-snug font-serif">Sign up for an creator account</p>
+            <div className="flex flex-col items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
+              <p className="w-full text-blue-500 mr-[900px] text-4xl font-medium  leading-snug font-serif">Sign up as Educator</p>
               {message && <div className="text-green-600 dark:text-green-400 mb-4">{message}</div>}
               {error && <div className="text-red-600 dark:text-red-400 mb-4">{error}</div>}
-              <div className="w-full mt-6 relative space-y-8">
+              <div className="w-[300] mt-6 relative space-y-8">
                 <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                    First Name
-                  </p>
+                  
                   <input
                     name="firstname"
                     type="text"
                     value={formData.firstname}
                     onChange={handleChange}
-                    placeholder="John"
-                    className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 text-base block bg-white border-gray-300 rounded-md"
+                    placeholder="First name"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-400 border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                    Last Name
-                  </p>
+                 
                   <input
                     name="lastname"
                     type="text"
                     value={formData.lastname}
                     onChange={handleChange}
-                    placeholder="Doe"
-                    className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 text-base block bg-white border-gray-300 rounded-md"
+                    placeholder="Last name"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-slate-400 border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                    Email
-                  </p>
+                
                   <input
                     name="email"
                     type="email"
                     value={formData.email}
                     onChange={handleChange}
-                    placeholder="123@ex.com"
-                    className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 text-base block bg-white border-gray-300 rounded-md"
+                    placeholder="Email"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-slate-400  border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                    Password
-                  </p>
+                
                   <input
                     name="password"
                     type="password"
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 text-base block bg-white border-gray-300 rounded-md"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
-                  <p className="bg-white pt-0 pr-2 pb-0 pl-2 -mt-3 mr-0 mb-0 ml-2 font-medium text-gray-600 absolute">
-                    Profile Image
-                  </p>
+              
                   <input
                     type="file"
                     accept="image/*"
                     onChange={handleImageChange}
-                    className="border placeholder-gray-400 focus:outline-none focus:border-black w-full pt-4 pr-4 pb-4 pl-4 mt-2 text-base block bg-white border-gray-300 rounded-md"
+                    placeholder='Image'
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-slate-300  border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
                   <button
                     type="submit"
-                    className="w-full inline-block pt-4 pr-5 pb-4 pl-5 text-xl font-medium text-center text-white bg-indigo-500 rounded-lg transition duration-200 hover:bg-indigo-600 ease"
+                    className=" inline-block  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-xl font-medium text-center text-white bg-indigo-500 rounded-lg transition duration-200 hover:bg-white hover:text-black border-solid ease"
                     onClick={handleSubmit}
                   >
                     Sign Up

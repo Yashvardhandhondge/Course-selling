@@ -87,29 +87,38 @@ function Admindetails() {
   };
 
   return (
-    <div>
+    <div className='h-full flex    max-w-fit'>
       {profile && !isEditing && (
-        <div>
-          <img src={profile.image} alt="Profile" />
-          <span className="text-white bg-red-600">
+
+        <div className='text-white'>
+        
+          <img src={profile.image} className='h-[300px] w-[300px] mt-4 ml-[100px] rounded-full' alt="Profile" />
+          <p className='text-3xl text-white mt-2 ml-[160px] font-sans '>Name :</p>
+          <span className="text-blue-300 ml-[170px] text-4xl font-serif">
             {profile.firstname} {profile.lastname}
           </span>
-          <p className="text-black">{profile.email}</p>
-          <p className="text-black">{profile.createdAt}</p>
-          <button onClick={handleEditToggle} className="text-black">
+          <p className='text-3xl text-white mt-2 ml-[160px] font-sans '>Email :</p>
+         
+          <p className="text-blue-300 ml-[170px] text-4xl font-serif">{profile.email}</p>
+          <button onClick={handleEditToggle} className=" ml-[160px] text-black mt-4 px-6 text-2xl font-serif py-2 rounded bg-blue-400 hover:text-white hover:bg-black border hover:border-white border-blue-400 ">
             Edit
           </button>
+          <button onClick={handleDelete} className="text-black ml-[30px] mt-4 px-6 text-2xl font-serif py-2 rounded bg-blue-400 hover:text-white hover:bg-black border hover:border-white border-blue-400 ">
+        Delete 
+      </button>
         </div>
       )}
       {isEditing && (
-        <div>
-          <h2>Edit Profile</h2>
+        <div className='flex justify-start flex-col ml-[610px] mt-[100px]'>
+                        <p className="w-full text-blue-500 mr-[900px] text-4xl font-medium  leading-snug font-serif">Edit Profile</p>
+
           <input
             type="text"
             name="firstname"
             value={formData.firstname}
             onChange={handleChange}
-            placeholder="First name"
+            placeholder="First Name"
+            className='border placeholder-black p-2 mb-[20px] font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md'
           />
           <input
             type="text"
@@ -117,6 +126,7 @@ function Admindetails() {
             value={formData.lastname}
             onChange={handleChange}
             placeholder="Last name"
+            className='border placeholder-black mb-[20px] font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md'
           />
           <input
             type="email"
@@ -124,15 +134,14 @@ function Admindetails() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
+            className='border placeholder-black mb-[20px] font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md'
           />
-          <input type="file" name="image" onChange={handleImageChange} />
-          <button className='bg-red-600' onClick={handleUpdate}>Save Changes</button>
+          <input type="file" name="image" className='border mb-[20px] placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md' onChange={handleImageChange} />
+          <button className='inline-block  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-xl font-medium text-center text-white bg-indigo-500 rounded-lg transition duration-200 hover:bg-white hover:text-black border-solid ease' onClick={handleUpdate}>Save Changes</button>
           <button onClick={handleEditToggle}>Cancel</button>
         </div>
       )}
-      <button onClick={handleDelete} className="text-red-600 mt-4">
-        Delete Account
-      </button>
+  
     </div>
   );
 }
