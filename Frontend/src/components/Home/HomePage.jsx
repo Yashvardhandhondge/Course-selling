@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { CiCircleChevDown } from "react-icons/ci";
 import Chatbot from './Chatbot';
-import About from './Home/About';
-import Admin from './Home/Admin';
+import About from './About';
+import Admin from './Admin';
 import { PiBasketballBold } from "react-icons/pi";
 
-import Student from './Home/Student';
+import Student from './Student';
 function HomePage()  {
     
    

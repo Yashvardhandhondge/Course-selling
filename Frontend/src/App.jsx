@@ -2,18 +2,19 @@
 
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
-import HomePage from './components/HomePage';
+import HomePage from './components/Home/HomePage';
 // import SignUp from './components/SignUp';
-import Signup from './Components/Signup';
-import AdminSignup from './components/AdminSignup';
-import AdminSignin from './components/AdminSigin';
-import Signin from './components/Signin';
+import Signup from './components/User/Signup';
+import AdminSignup from './components/Admin/AdminSignup';
+import AdminSignin from './components/Admin/AdminSigin';
+import Signin from './components/User/Signin';
 import { authService } from './services/authservices';
-import UserLandingpage from './components/UserLandingpage'
-import AdminLandingPage from './components/AdminLandingPage';
-import AdminProfile from './components/AdminProfile';
-
-
+import UserLandingpage from './components/User/UserLandingpage'
+import AdminLandingPage from './components/Admin/AdminLandingPage';
+import AdminProfile from './components/Admin/AdminProfile';
+import CourseFormModal from './components/Admin/CourseModalForm';
+import CourseDetails from './components/Admin/CoursePage';
+import AddLessons from './components/Admin/Addlessons';
 
 
 function App() {
@@ -51,6 +52,21 @@ function App() {
          path='/admin/profile'
          element={authService.isAuthenticated() ? <Navigate to='/' />:<AdminProfile/>}
          ></Route>
+         <Route
+         path='/admin/create'
+         element={authService.isAuthenticated() ? <Navigate to='/' />:<CourseFormModal/>}
+         > </Route>
+         <Route
+         path="/admin/course/:courseId"
+         element={authService.isAuthenticated()? <Navigate to='/' />:<CourseDetails/>}
+         ></Route>
+         <Route
+         path='/admin/add-lesson/:courseId'
+         
+         element={authService.isAuthenticated() ? <Navigate to='/'/>:<AddLessons/> }
+         >
+
+         </Route>
         </Routes>
     
     </Router>

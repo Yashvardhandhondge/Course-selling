@@ -27,16 +27,18 @@ function Navbar() {
 
   function handlelogout(){
 localStorage.removeItem("token");
-navigate('/login')
+navigate('/admin/signin')
   }
 
 
   return (
     <div>
    <div className="text-3xl flex justify-start  ">
-   <Koursely/>
-            <div className="text-white ml-[300px]">Admin Dashborad </div>
-         <div className=" ml-[200px]  space-x-4">
+    <Link to='/admin/landing' className="flex">
+   <PiBasketballBold className='text-blue-500  text-5xl p-2' /> <p className="text-3xl mt-1 font-serif text-white">Koursely</p>  </Link>
+
+            <div className="text-white font-serif ml-[300px]">Admin Panel</div>
+         <div className=" ml-[300px]  space-x-4">
          {profile && (
           <Link to="/admin/profile">
             <div className="flex - cursor-pointer">
@@ -45,12 +47,12 @@ navigate('/login')
                 alt="Profile"
                 className="w-10 h-10 rounded-full"
               />
-              <span className="text-white ">{profile.firstname} </span>
+              <span className="text-white font-serif">{profile.firstname} </span>
             </div>
           </Link>
         )}
          </div>
-            <button onClick={handlelogout} className="bg-blue-400 font-serif text-sm text-black ml-[200px] shadow border-blue-400 px-6 py-3 rounded hover:bg-black hover:text-white border border-solid">Logout</button>
+            <button onClick={handlelogout} className="bg-blue-400 font-serif text-sm text-black ml-[100px] shadow border-blue-400 px-6 py-3 rounded hover:bg-black hover:text-white border border-solid">Logout</button>
             </div>  
             
 

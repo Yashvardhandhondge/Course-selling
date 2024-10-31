@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { adminAPI } from '../services/adminApi';
-import imageCompression from 'browser-image-compression';
+import { adminAPI } from '../../services/adminApi';
+import { compressImage } from '../../utlis/imageCompressionHelper';
 import { Link,useNavigate } from 'react-router-dom';
 import { PiBasketballBold } from "react-icons/pi";
 const AdminSignup = () => {
@@ -23,24 +23,14 @@ const AdminSignup = () => {
 
   const handleImageChange = async (e) => {
     const file = e.target.files[0];
-    if (file) {
-      try {
-        const options = {
-          maxSizeMB: 1,
-          maxWidthOrHeight: 1920,
-          useWebWorker: true,
-        };
-        const compressedFile = await imageCompression(file, options);
-        const reader = new FileReader();
-        reader.onloadend = () => {
-          setFormData((prev) => ({ ...prev, image: reader.result }));
-        };
-        reader.readAsDataURL(compressedFile);
-      } catch (error) {
-        console.error('Error compressing image:', error);
-        setError('Image compression failed.');
-      }
+   if (file){
+    try{
+       const compressedImageDataURL = await compressImage(file);
+       setFormData((prev)=>({...prev,image:compressedImageDataURL}));
+    }catch(error){
+      setError('image Compression failed')
     }
+   }
   };
 
   const handleSubmit = async (e) => {
@@ -98,7 +88,7 @@ const AdminSignup = () => {
                     value={formData.firstname}
                     onChange={handleChange}
                     placeholder="First name"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-400 border-gray-300 rounded-md"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-white border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -109,7 +99,7 @@ const AdminSignup = () => {
                     value={formData.lastname}
                     onChange={handleChange}
                     placeholder="Last name"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-slate-400 border-gray-300 rounded-md"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -120,7 +110,7 @@ const AdminSignup = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Email"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-slate-400  border-gray-300 rounded-md"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -131,7 +121,7 @@ const AdminSignup = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-white border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -141,7 +131,7 @@ const AdminSignup = () => {
                     accept="image/*"
                     onChange={handleImageChange}
                     placeholder='Image'
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-slate-300  border-gray-300 rounded-md"
+                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -156,7 +146,7 @@ const AdminSignup = () => {
               </div>
               <p className="mt-6 text-xs text-gray-600 text-center">
                 Already have an account?
-                <Link to="/admin/signin" className="text-indigo-500 border-b border-indigo-500 border-dotted">
+                <Link to="/admin/signin" className="text-indigo-500 border-b  border-indigo-500 border-dotted">
                   {' '}
                   Sign In{' '}
                 </Link>

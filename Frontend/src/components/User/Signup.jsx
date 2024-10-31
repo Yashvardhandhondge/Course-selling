@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { userAPI } from '../services/userAPi'; 
-import { compressImage } from '../utlis/imageCompressionHelper';
+import { userAPI } from '../../services/userAPi'; 
+import { compressImage } from '../../utlis/imageCompressionHelper';
 import { Link } from 'react-router-dom';
 
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { chatbotAPI } from '../services/ChatbotAPI';
+import { chatbotAPI } from '../../services/ChatbotAPI';
 import { CiCircleChevDown } from "react-icons/ci";
 import { AiOutlineSend } from "react-icons/ai";
 

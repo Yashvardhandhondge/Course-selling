@@ -17,5 +17,9 @@ export const adminAPI = {
     addLesson: (data, token) => axios.put(`${API_URL}/admin/course/add-lesson`, data, { headers: { token } }),
     updateCourse: (data, token) => axios.put(`${API_URL}/admin/course/update`, data, { headers: { token } }),
     getCourses: (token) => axios.get(`${API_URL}/admin/course/get`, { headers: { token } }),
-    deleteCourse: (data, token) => axios.delete(`${API_URL}/admin/course/delete`, { data, headers: { token } }),
+    getCoursesId: (courseId, token) => axios.get(`${API_URL}/admin/course/get/${courseId}`, { headers: { token } }),
+    addLessonId: (courseId, data, token) => axios.put(`${API_URL}/admin/course/add-lesson/${courseId}`, data, { headers: { token } }),
+
+    deleteCourse: (courseId,data, token) => axios.delete(`${API_URL}/admin/course/delete/${courseId}`, { data, headers: { token } }),
+
 };

@@ -1,6 +1,6 @@
 import React from 'react'
-import ProfileNav from './Admin/ProfileNav'
-import Admindetails from './Admin/Admindetails'
+import ProfileNav from './ProfileNav'
+import Admindetails from './Admindetails'
 function AdminProfile() {
   return (
    <div className='w-full h-screen bg-black' >
