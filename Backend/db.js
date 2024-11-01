@@ -64,7 +64,7 @@ const enrollmentSchema = new mongoose.Schema({
 
 const wishlistSchema = new mongoose.Schema({
     userId:{type:ObjectId,ref:'user'},
-    courses:{type:ObjectId,ref:'course'}
+    courses:[{type:ObjectId,ref:'course'}]
 })
 
 const ReviewSchema = new mongoose.Schema({

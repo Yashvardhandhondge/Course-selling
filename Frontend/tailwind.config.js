@@ -10,6 +10,9 @@ const config = {
   darkMode: 'class', // Enable dark mode using class strategy
   theme: {
     extend: {
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":

@@ -43,6 +43,7 @@ Enrollementroutes.put('/progress',usermiddleware,async function(req,res){
     const {courseId,lessonId} = req.body;
     
     try{
+         
          let enrollment = await EnrollementModel.findOne({userId,courseId});
 
          if(!enrollment){

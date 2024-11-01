@@ -11,9 +11,9 @@ function HomePage()  {
     
    
     return (
-        <div className='w-full h-screen bg-black p-4 '>
+        <div className='w-screen h-screen bg-gradient-to-r from-black to-[#2E0249] p-4 '>
             <div className='flex justify-between items-center'>
-            <div className="text-4xl flex text-white font-serif ml-14 font-extrabold">
+            <div className="text-4xl flex text-white font-poppins ml-14 font-extrabold">
                 
             <PiBasketballBold className='mr-5 text-blue-500 h-10' />   Koursely
             </div>

@@ -44,11 +44,12 @@ const AdminSignin = () => {
 
   return (
    <div className="bg-black h-screen w-screen  ">
-      <div className='flex'>
-       <PiBasketballBold className='text-blue-500  text-5xl p-2' /> <p className="text-3xl mt-1 font-serif text-white">Koursely</p>  
-
+      <div className='flex p-4'>
+        <Link to='/' className='flex'>
+       <PiBasketballBold className='text-blue-500  text-5xl p-2' /> <p className="text-3xl mt-[5px] mb-[20px] text-white">Koursely</p>  
+       </Link>
        </div>
-      <div className='border-t-[1px] border-zinc-700 mt-2 flex justify-center '></div>
+
       
         <div className="flex ">
           
@@ -61,8 +62,8 @@ const AdminSignin = () => {
             </div>
      
         <div className="w-full ml-[20px] mt-[50px] mr-0 mb-0  relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
-          <div className="flex flex-col mt-[50px] ml-[20px] items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
-            <h1 className="w-full text-blue-500 mr-[900px] text-4xl font-medium  leading-snug font-serif mb-1">Sign In</h1>
+          <div className="flex flex-col mt-[100px] ml-[20px] items-start  justify-start pt-10 pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
+            <h1 className="w-full text-purple-500 mr-[900px] text-4xl font-medium  leading-snug font-poppins mb-[20px]">Sign In</h1>
             <form onSubmit={handleSubmit} className="space-y-8">
               {message && <div className="text-green-600 mb-4">{message}</div>}
               {error && <div className="text-red-600 mb-4">{error}</div>}
@@ -75,7 +76,7 @@ const AdminSignin = () => {
                   value={formData.email}
                   onChange={handleChange}
                   placeholder="Email"
-                  className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-[10px]  text-base block bg-white  border-gray-300 rounded-md"
+                  className="border placeholder-black fontmb-[20px]:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-[10px]  text-base block bg-white  border-gray-300 rounded-2xl"
                   required
                 />
               </div>
@@ -88,7 +89,7 @@ const AdminSignin = () => {
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="Password"
-                  className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-md"
+                  className="border placeholder-black fontmb-[20px]:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-2xl"
                   required
                 />
               </div>
@@ -96,15 +97,15 @@ const AdminSignin = () => {
             
               <button
                 type="submit"
-                className="inline-block  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-xl font-medium text-center text-white bg-indigo-500 rounded-lg transition duration-200 hover:bg-white hover:text-black border-solid ease"
+                className="inline-block  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 rounded-2xl  text-xl font-medium text-center text-white bg-gradient-to-r from-violet-500 to-fuchsia-500  transition duration-200 hover:bg-white hover:scale-95 hover:text-black border-solid ease"
               >
                 Sign In
               </button>
 
         
-              <p className="mt-6 text-xs text-gray-600 text-center">
-                Don't have an account? 
-                <Link to="/admin/signup" className="text-indigo-500  border-b border-indigo-500 border-dotted">Sign Up</Link>
+              <p className="mt-6 text-xs text-white text-center">
+                Don't have an account? &nbsp;
+                <Link to="/admin/signup" className="text-purple-500  border-b border-purple-500 border-dotted ">Sign Up</Link>
               </p>
             </form>
           </div>

@@ -7,15 +7,15 @@ function About() {
     <div className='flex justify-between'>
         
         <div className='m-[100px]  h-full'>
-            <p className='font-serif text-7xl p-2'>Explore Live</p>
-            <p className='font-serif text-7xl p-2'>Creative classes</p>
+            <p className='font-poppins text-7xl p-2'>Explore Live</p>
+            <p className='font-poppins text-7xl p-2'>Creative classes</p>
             <p className='mt-2 ml-3 font-serif'>Choose from over 2,000+ courses on topics like Web Devlopment, Dsa, </p>
             <p className='p-1 ml-2 font-serif'>Devops ,Web3 & many more ..</p>
           <br />
-            <Link to="/signup" className='px-5 py-3 m-4 font-serif hover:bg-black hover:text-white font-semibold border rounded border-solid bg-blue-400 text-black'>
+            <Link to="/signup" className='px-5 py-3 m-4 font-poppins hover:bg-black hover:text-white font-semibold border rounded border-solid bg-purple-400 text-black'>
                 Get Started
             </Link>
-            <Link to="/" className='border rounded border-solid px-5 py-3 hover:bg-blue-400 hover:text-black font-serif font-semibold transform-transition'>
+            <Link to="/" className='border rounded border-solid px-5 py-3 hover:bg-blue-400 hover:text-black font-poppins font-semibold transform-transition'>
             Leran more
             </Link>
             
@@ -23,7 +23,7 @@ function About() {
 
     
         <div className=''>
-    <img src="https://img.freepik.com/premium-photo/hipster-lifestyle-creative-workspace-confident-guy-working-laptop-coffee-shop_183219-8111.jpg" 
+    <img src="https://pbs.twimg.com/media/GbR2CYzakAIelxz?format=jpg&name=medium" 
     className='mt-[100px] rounded h-[400px] w-[600px] text-black bg-black mr-28'
     alt="" />
         </div>

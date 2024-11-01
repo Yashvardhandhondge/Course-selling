@@ -2,7 +2,7 @@
 const { Router } = require('express');
 const courseRoute = Router();
 const { usermiddleware } = require('../middleware/usermiddleware');
-const { purchaseModel, courseModel, userModel } = require('../db');
+const { purchaseModel, courseModel, userModel, EnrollementModel } = require('../db');
 const { cacheMiddleware } = require('../middleware/cachemiddleware');
 const { mockPayment } = require('../payemnt');
 const { sendPurchaseEmail } = require('../emailservice/emailService');
@@ -36,6 +36,13 @@ courseRoute.post('/purchase', usermiddleware, async (req, res) => {
             paymentMethod: paymentMethod,
             status: "Completed"
         });
+    
+    
+        const newEnrollement = await EnrollementModel.create({
+            courseId,
+            userId
+        })
+        
 
         if (purchase) {
             await sendPurchaseEmail(user.email, course.title);
@@ -54,20 +61,16 @@ courseRoute.post('/purchase', usermiddleware, async (req, res) => {
         res.status(500).json({ message: "Internal server error" });
     }
 });
-
-
-function initCourseRoute(client) {
-    courseRoute.get('/getcourse', cacheMiddleware(client), usermiddleware, async (req, res) => {
+function initCourseRoute() {
+    courseRoute.get('/getcourse', usermiddleware, async (req, res) => {
         try {
+            const userId = req.userId;
             const { page = 1, limit = 10 } = req.query;
             const skip = (page - 1) * limit;
 
+            // Fetch data directly from MongoDB without Redis
             const courses = await courseModel.find().skip(skip).limit(parseInt(limit));
-            const redisKey = `courses_page_${page}`;
             const totalCourses = await courseModel.countDocuments();
-
-            
-            client.setex(redisKey, 600, JSON.stringify(courses));
 
             if (courses) {
                 res.status(200).json({
@@ -86,6 +89,36 @@ function initCourseRoute(client) {
 
     return courseRoute;
 }
+
+
+// Inside your courseRoute file
+courseRoute.get('/my-courses', usermiddleware, async (req, res) => {
+    try {
+        const userId = req.userId;
+
+        // Fetching purchased courses
+        const purchases = await purchaseModel.find({ userId });
+        const purchasedCourseIds = purchases.map(p => p.courseId);
+
+        // Fetching enrollments
+        const enrollments = await EnrollementModel.find({ userId });
+        const enrolledCourseIds = enrollments.map(e => e.courseId);
+
+        // Combine the two lists of course IDs
+        const courseIds = [...new Set([...purchasedCourseIds, ...enrolledCourseIds])];
+
+        // Fetch the course details
+        const courses = await courseModel.find({ _id: { $in: courseIds } });
+
+        res.status(200).json({
+            message: 'Fetched your courses successfully',
+            courses,
+        });
+    } catch (e) {
+        console.error(e);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 module.exports = {
     initCourseRoute,

@@ -4,10 +4,10 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HomePage from './components/Home/HomePage';
 // import SignUp from './components/SignUp';
-import Signup from './components/User/Signup';
+import Signin from './components/User/Signin'
 import AdminSignup from './components/Admin/AdminSignup';
 import AdminSignin from './components/Admin/AdminSigin';
-import Signin from './components/User/Signin';
+import Signup from './components/User/Signup';
 import { authService } from './services/authservices';
 import UserLandingpage from './components/User/UserLandingpage'
 import AdminLandingPage from './components/Admin/AdminLandingPage';
@@ -15,8 +15,10 @@ import AdminProfile from './components/Admin/AdminProfile';
 import CourseFormModal from './components/Admin/CourseModalForm';
 import CourseDetails from './components/Admin/CoursePage';
 import AddLessons from './components/Admin/Addlessons';
-
-
+import PaymentConfirmation from './components/User/PaymentConfiguration';
+import CourseDetailsPage from './components/User/CourseDeatilsPage';
+import UserProfile from './components/User/UserProfile';
+import EditUserProfile from './components/User/Edits';
 function App() {
   return (
   
@@ -64,8 +66,25 @@ function App() {
          path='/admin/add-lesson/:courseId'
          
          element={authService.isAuthenticated() ? <Navigate to='/'/>:<AddLessons/> }
+         > </Route>
+         <Route
+         path='/payment'
+         element={authService.isAuthenticated() ? <Navigate to='/' /> : <PaymentConfirmation/>}
+         ></Route>
+         <Route
+         path='/user/course'
+         element={authService.isAuthenticated() ? <Navigate to='/' /> : <CourseDetailsPage/>}
          >
 
+         </Route>
+         <Route
+         path='/user/profile'
+         element={authService.isAuthenticated() ? <Navigate to='/'/>:<UserProfile/>}
+         ></Route>
+         <Route
+         path='/user/edit'
+         element={authService.isAuthenticated() ? <Navigate to='/'/>: <EditUserProfile/>}
+         >
          </Route>
         </Routes>
     

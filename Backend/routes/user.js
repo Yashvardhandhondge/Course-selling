@@ -232,6 +232,23 @@ userRouter.delete('/delete',usermiddleware,async function(req,res){
    }
 })
 
+userRouter.get('/profile', usermiddleware, async (req, res) => {
+    try {
+        const user = await userModel.findById(req.userId, 'firstname image'); // Retrieve only firstname and image
+
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        res.status(200).json({
+            message: 'User data fetched successfully',
+            user: { firstname: user.firstname, image: user.image }
+        });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'An error occurred while fetching user data' });
+    }
+});
 
 
 

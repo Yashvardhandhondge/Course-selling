@@ -58,11 +58,12 @@ const AdminSignup = () => {
 
   return (
     <div className="bg-black  ">
-      <div className='flex'>
-       <PiBasketballBold className='text-blue-500  text-5xl p-2' /> <p className="text-3xl mt-1 font-serif text-white">Koursely</p>  
-
+      <div className='flex p-4'>
+        <Link to='/' className='flex'>
+       <PiBasketballBold className='text-blue-500  text-5xl p-2' /> <p className="text-3xl mt-[5px] mb-[20px] text-white">Koursely</p>  
+       </Link>
        </div>
-      <div className='border-t-[1px] border-zinc-700 mt-2 flex justify-center '></div>
+    
       <div className=" ">
         <div className="flex ">
           <div >
@@ -76,7 +77,7 @@ const AdminSignup = () => {
           </div>
           <div className="w-full mt-20 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
             <div className="flex flex-col items-start justify-start pt-10 pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
-              <p className="w-full text-blue-500 mr-[900px] text-4xl font-medium  leading-snug font-serif">Sign up as Educator</p>
+              <p className="w-full text-blue-500 mr-[900px] text-4xl font-medium  leading-snug font-poppins">Sign up as Educator</p>
               {message && <div className="text-green-600 dark:text-green-400 mb-4">{message}</div>}
               {error && <div className="text-red-600 dark:text-red-400 mb-4">{error}</div>}
               <div className="w-[300] mt-6 relative space-y-8">
@@ -88,7 +89,7 @@ const AdminSignup = () => {
                     value={formData.firstname}
                     onChange={handleChange}
                     placeholder="First name"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-white border-gray-300 rounded-md"
+                    className="border placeholder-black font-poppins focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-white border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -99,7 +100,7 @@ const AdminSignup = () => {
                     value={formData.lastname}
                     onChange={handleChange}
                     placeholder="Last name"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white border-gray-300 rounded-md"
+                    className="border placeholder-black font-poppins focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -110,7 +111,7 @@ const AdminSignup = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Email"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-md"
+                    className="border placeholder-black font-poppins focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -121,7 +122,7 @@ const AdminSignup = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-white border-gray-300 rounded-md"
+                    className="border placeholder-black font-poppins focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-white border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">
@@ -131,7 +132,7 @@ const AdminSignup = () => {
                     accept="image/*"
                     onChange={handleImageChange}
                     placeholder='Image'
-                    className="border placeholder-black font-serif focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-md"
+                    className="border placeholder-black font-poppins focus:outline-none focus:border-black  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-base block bg-white  border-gray-300 rounded-md"
                   />
                 </div>
                 <div className="relative">

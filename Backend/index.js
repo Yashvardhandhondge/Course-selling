@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { createClient } = require('redis');
+// const { createClient } = require('redis');
 require('dotenv').config();
 const cors = require('cors');
 const app = express();
@@ -16,22 +16,30 @@ app.use(cors({
 const MONGO_URL = process.env.MONGO_URL;
 
 
-const client = createClient({
-    password: 'e89Wgpnrlqn7RPw2OqLbSW87S7jCzU7j',
-    socket: {
-        host: 'redis-14964.c322.us-east-1-2.ec2.redns.redis-cloud.com',
-        port: 14964
-    }
-});
+// const client = createClient({
+//     password: 'e89Wgpnrlqn7RPw2OqLbSW87S7jCzU7j',
+//     socket: {
+//         host: 'redis-14964.c322.us-east-1-2.ec2.redns.redis-cloud.com',
+//         port: 14964
+//     }
+// });
 
 
-client.connect()
-    .then(() => {
-        console.log('Connected to Redis');
-    })
-    .catch((err) => {
-        console.error('Redis connection error:', err);
-    });
+// client.connect()
+//     .then(async () => {
+//         console.log('Connected to Redis');
+//         try {
+//             await client.set('test_key', 'test_value');
+//             const value = await client.get('test_key');
+//             console.log('Test key value:', value); // Should log 'test_value'
+//         } catch (error) {
+//             console.error('Error during Redis test command:', error);
+//         }
+//     })
+//     .catch((err) => {
+//         console.error('Redis connection error:', err);
+//     });
+
 console.log(process.env.API_KEY)
 
 const { adminRouter } = require('./routes/admin');
@@ -49,7 +57,7 @@ app.use('/review', reviewsRoute);
 app.use('/search', SearchRoute);
 app.use('/wishlist', WishlistRoute);
 app.use('/enroll', Enrollementroutes);
-app.use('/', initCourseRoute(client));
+app.use('/', initCourseRoute());
 app.use('/get',courseRoute)
 app.use('/user', userRouter);
 app.use('/admin', adminRouter);
@@ -71,5 +79,5 @@ app.listen(port, () => {
 });
 
 module.exports = {
-    client
+    
 };
