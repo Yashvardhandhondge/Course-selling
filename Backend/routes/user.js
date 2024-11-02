@@ -8,6 +8,7 @@ const jwt = require('jsonwebtoken')
 const {usermiddleware} = require('../middleware/usermiddleware')
 const {sendWelcomeEmail} = require('../emailservice/emailService');
 const { logActivity } = require('../middleware/logActivity');
+const e = require('express');
 
 
 
@@ -231,10 +232,10 @@ userRouter.delete('/delete',usermiddleware,async function(req,res){
     console.error(e)
    }
 })
-
 userRouter.get('/profile', usermiddleware, async (req, res) => {
     try {
-        const user = await userModel.findById(req.userId, 'firstname image'); // Retrieve only firstname and image
+        
+        const user = await userModel.findById(req.userId, 'firstname lastname email image createdAt updatedAt'); 
 
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
@@ -242,7 +243,14 @@ userRouter.get('/profile', usermiddleware, async (req, res) => {
 
         res.status(200).json({
             message: 'User data fetched successfully',
-            user: { firstname: user.firstname, image: user.image }
+            user: {
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                image: user.image,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+            }
         });
     } catch (error) {
         console.error(error);
@@ -250,6 +258,19 @@ userRouter.get('/profile', usermiddleware, async (req, res) => {
     }
 });
 
+userRouter.get('/activity',usermiddleware,async function(req,res){
+    try{
+        const activities = await ActivityLogModel.find({userId:req.userId}).sort({timestamp:-1}).lean();
+
+        res.status(200).json({
+            message:"Activity logs fetched successfully",
+            activities,
+        });
+    }catch(error){
+        console.error(`Error fetching activity logs :`,e);
+        res.status(500).json({message:"An error occurred while fetching activity logs"});
+    }
+})
 
 
 module.exports={

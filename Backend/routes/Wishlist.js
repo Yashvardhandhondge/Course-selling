@@ -6,7 +6,7 @@ const { logActivity } = require('../middleware/logActivity');
 const WishlistRoute = Router();
 WishlistRoute.use(logActivity);
 
-// Add course to wishlist
+
 WishlistRoute.post('/add', usermiddleware, async function(req, res) {
   const userId = req.userId;
   const { courseId } = req.body;
@@ -32,7 +32,7 @@ WishlistRoute.post('/add', usermiddleware, async function(req, res) {
   }
 });
 
-// Get wishlist
+
 WishlistRoute.get("/:userId", usermiddleware, async function(req, res) {
   const userId = req.userId;
 
@@ -45,7 +45,7 @@ WishlistRoute.get("/:userId", usermiddleware, async function(req, res) {
   }
 });
 
-// Get course recommendations based on purchase history
+
 WishlistRoute.get('/recommendations/:userId', usermiddleware, async (req, res) => {
   const userId = req.userId;
 
@@ -65,7 +65,7 @@ WishlistRoute.get('/recommendations/:userId', usermiddleware, async (req, res) =
   }
 });
 
-// Remove specific course from wishlist
+
 WishlistRoute.delete('/delete', usermiddleware, async function(req, res) {
   const userId = req.userId;
   const { courseId } = req.body;
