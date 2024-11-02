@@ -1,4 +1,4 @@
-import { userAPI } from './userAPi';
+import { userAPI } from './userAPI';
 import { adminAPI } from './adminApi';
 import { handleError } from './errorHandler';
 
