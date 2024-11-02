@@ -3,7 +3,7 @@ import { courseAPI } from '../../services/courseAPI';
 import ExploreCourseCard from './ExploreCourse';
 import Search from './Search'; 
 import debounce from 'lodash.debounce'; 
-import Profileshortcut from './profileshortcut';
+import ProfileShortcut from './Profile';
 
 const MyCoursesPage = () => {
     const [myCourses, setMyCourses] = useState([]);

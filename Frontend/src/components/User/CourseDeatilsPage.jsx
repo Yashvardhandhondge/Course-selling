@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { enrollmentAPI } from '../../services/enrollmentAPI';
 import { reviewAPI } from '../../services/reviewAPI';
 import { PiBasketballBold } from "react-icons/pi";
-import Profileshortcut from './profileshortcut';
+import Profileshortcut from './Profile';
 import { Link } from 'react-router-dom';
 
 const CourseDetailsPage = React.memo(() => {

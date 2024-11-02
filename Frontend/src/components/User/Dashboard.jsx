@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiBasketballBold } from "react-icons/pi";
-import Profileshortcut from './profileshortcut';
+import Profileshortcut from './Profile';
 import { userAPI } from '../../services/userAPI';
 
 function UserDashboard() {

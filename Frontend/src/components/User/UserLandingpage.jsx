@@ -7,7 +7,7 @@ import Search from './Search';
 import debounce from 'lodash.debounce';
 import MyCoursesPage from './AvailableCurse';
 import { AiOutlineHeart } from 'react-icons/ai';
-import Profileshortcut from './profileshortcut';
+import Profileshortcut from './Profile';
 import { Link, useNavigate } from 'react-router-dom';
 import { PiBasketballBold } from "react-icons/pi";
 import { FiLogOut, FiBookOpen, FiShoppingCart } from 'react-icons/fi';
