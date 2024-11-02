@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Search = ({ onSearch }) => {
+const Search = React.memo(({ onSearch }) => {
     const handleChange = (event) => {
         onSearch(event.target.value);
     };
@@ -9,10 +9,10 @@ const Search = ({ onSearch }) => {
         <input
             type="text"
             placeholder="Search courses..."
-            className="border rounded p-2 w-full"
+            className="border rounded bg-purple-700 placeholder-white font-bold font-poppins text-white p-2 w-96"
             onChange={handleChange}
         />
     );
-};
+});
 
 export default Search;

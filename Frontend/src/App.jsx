@@ -19,6 +19,7 @@ import PaymentConfirmation from './components/User/PaymentConfiguration';
 import CourseDetailsPage from './components/User/CourseDeatilsPage';
 import UserProfile from './components/User/UserProfile';
 import EditUserProfile from './components/User/Edits';
+import UserDashboard from './components/User/Dashboard';
 function App() {
   return (
   
@@ -84,6 +85,11 @@ function App() {
          <Route
          path='/user/edit'
          element={authService.isAuthenticated() ? <Navigate to='/'/>: <EditUserProfile/>}
+         >
+         </Route>
+         <Route
+         path='user/dashboard'
+         element={authService.isAuthenticated() ? <Navigate to='/'/>: <UserDashboard/>}
          >
          </Route>
         </Routes>

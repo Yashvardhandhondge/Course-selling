@@ -36,7 +36,7 @@ function EditUserProfile() {
   const handleSave = async (e) => {
     e.preventDefault();
     const updatedData = { ...formData };
-    if (!formData.password) delete updatedData.password; // Remove password field if empty
+    if (!formData.password) delete updatedData.password; 
 
     try {
       await userAPI.updateUser(updatedData, token);
@@ -47,7 +47,7 @@ function EditUserProfile() {
   };
 
   return (
-    <div className="edit-user-profile">
+    <div className="edit-user-profile h-screen">
       <h2>Edit Profile</h2>
       <form onSubmit={handleSave}>
         <input

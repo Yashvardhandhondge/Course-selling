@@ -2,29 +2,29 @@ import React, { useState } from 'react';
 import { chatbotAPI } from '../../services/ChatbotAPI';
 import { AiOutlineSend } from "react-icons/ai";
 
-const Chatbot = ({ token }) => {
+const Chatbot = React.memo(({ token }) => {
   const [message, setMessage] = useState('');
   const [chatHistory, setChatHistory] = useState([]);
   const [showChat, setShowChat] = useState(false);
 
-  const handleToggleChat = () => setShowChat(!showChat);
+  const handleToggleChat = () => setShowChat(prev => !prev);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
 
     if (message.trim()) {
       const newMessage = { type: 'user', text: message };
-      setChatHistory((prev) => [...prev, newMessage]); 
+      setChatHistory(prev => [...prev, newMessage]); 
       setMessage(''); 
 
       try {
         const { data } = await chatbotAPI.sendMessage({ message }, token);
         const botResponse = { type: 'bot', text: data.response };
 
-        setChatHistory((prev) => [...prev, botResponse]); 
+        setChatHistory(prev => [...prev, botResponse]); 
       } catch (error) {
         console.error('Error sending message:', error);
-        setChatHistory((prev) => [
+        setChatHistory(prev => [
           ...prev,
           { type: 'bot', text: 'Sorry, an error occurred.' },
         ]);
@@ -37,7 +37,7 @@ const Chatbot = ({ token }) => {
       {!showChat && (
         <button
           onClick={handleToggleChat}
-          className="bg-purple-400 p-3 w-24 rounded-full shadow-lg focus:outline-none text-white font-poppins hover:bg-pruple-500 transition-transform transform hover:scale-105"
+          className="bg-purple-400 p-3 w-24 rounded-full shadow-lg focus:outline-none text-white font-poppins hover:bg-purple-500 transition-transform transform hover:scale-105"
         >
           Ask AI!
         </button>
@@ -57,15 +57,15 @@ const Chatbot = ({ token }) => {
 
           <div className="flex-grow overflow-y-auto mb-4">
             {chatHistory.length === 0 ? (
-              <p className="text-gray-500 text-center">
+              <p className="text-gray-500 text-center font-poppins">
                 Start a conversation about your career direction!
               </p>
             ) : (
               chatHistory.map((chat, index) => (
                 <div
                   key={index}
-                  className={`mb-2 p-2 rounded-md max-w-[80%] ${
-                    chat.type === 'user' ? 'bg-black text-white ml-auto border border-blue-400' : 'bg-black text-white  border border-purple-400 mr-auto'
+                  className={`mb-2 p-2 rounded-md max-w-[80%] font-poppins ${
+                    chat.type === 'user' ? 'bg-black text-white ml-auto border border-blue-400' : 'bg-black text-white border border-purple-400 mr-auto'
                   }`}
                 >
                   {chat.text}
@@ -77,7 +77,7 @@ const Chatbot = ({ token }) => {
           <form onSubmit={handleSendMessage} className="flex items-center space-x-2">
             <input
               type="text"
-              className="w-full p-2 border border-blue text-white  placeholder:text-white bg-purple-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full p-2 border border-blue text-white placeholder:text-white bg-purple-700 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Type your message..."
               value={message}
               onChange={(e) => setMessage(e.target.value)}
@@ -93,6 +93,6 @@ const Chatbot = ({ token }) => {
       )}
     </div>
   );
-};
+});
 
 export default Chatbot;

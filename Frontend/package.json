@@ -13,6 +13,7 @@
     "axios": "^1.7.7",
     "browser-image-compression": "^2.0.2",
     "cors": "^2.8.5",
+    "dayjs": "^1.11.13",
     "lodash.debounce": "^4.0.8",
     "next-themes": "^0.3.0",
     "react": "^18.3.1",

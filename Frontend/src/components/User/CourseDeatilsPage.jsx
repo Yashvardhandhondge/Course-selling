@@ -1,11 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { enrollmentAPI } from '../../services/enrollmentAPI';
 import { reviewAPI } from '../../services/reviewAPI';
+import { PiBasketballBold } from "react-icons/pi";
+import Profileshortcut from './profileshortcut';
+import { Link } from 'react-router-dom';
 
-const CourseDetailsPage = () => {
+const CourseDetailsPage = React.memo(() => {
     const { state } = useLocation();
-    const { course } = state || {}; // Access course data from navigation state
+    const { course } = state || {};
     const [progress, setProgress] = useState(0);
     const [completedLessons, setCompletedLessons] = useState([]);
     const [isCourseComplete, setIsCourseComplete] = useState(false);
@@ -13,19 +16,20 @@ const CourseDetailsPage = () => {
     const [comment, setComment] = useState('');
     const [reviews, setReviews] = useState([]);
     const [averageRating, setAverageRating] = useState(0);
+    const [activeVideo, setActiveVideo] = useState(null);
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
 
     useEffect(() => {
         if (!course) {
-            navigate('/courses'); // Redirect if no course data is available
+            navigate('/courses');
             return;
         }
         fetchProgress();
         fetchReviews();
-    }, [course]);
+    }, [course, navigate]);
 
-    const fetchProgress = async () => {
+    const fetchProgress = useCallback(async () => {
         try {
             const response = await enrollmentAPI.getProgress({ courseId: course._id }, token);
             setProgress(response.data.progress);
@@ -34,42 +38,32 @@ const CourseDetailsPage = () => {
         } catch (error) {
             console.error("Error fetching progress:", error);
         }
-    };
+    }, [course, token]);
 
-    const fetchReviews = async () => {
+    const fetchReviews = useCallback(async () => {
         try {
             const response = await reviewAPI.getCourseReviews(course._id);
             setReviews(response.data.review);
-            const avgRating = response.data.review.reduce((acc, review) => acc + review.rating, 0) / response.data.review.length || 0; // Added a fallback to avoid NaN
+            const avgRating = response.data.review.reduce((acc, review) => acc + review.rating, 0) / response.data.review.length || 0;
             setAverageRating(avgRating);
         } catch (error) {
             console.error("Error fetching reviews:", error);
         }
-    };
+    }, [course._id]);
 
-    const handleUpdateProgress = async (lessonId) => {
-        if (completedLessons.includes(lessonId)) return; // Skip if already completed
+    const handleUpdateProgress = useCallback(async (lessonId) => {
+        if (completedLessons.includes(lessonId)) return;
 
         try {
             const response = await enrollmentAPI.updateProgress({ courseId: course._id, lessonId }, token);
-            setCompletedLessons([...completedLessons, lessonId]);
+            setCompletedLessons(prev => [...prev, lessonId]);
             setProgress(response.data.progress);
         } catch (error) {
             console.error("Error updating progress:", error);
         }
-    };
+    }, [completedLessons, course._id, token]);
 
-    const handleCompleteCourse = async () => {
-        try {
-            const response = await enrollmentAPI.completeCourse({ courseId: course._id }, token);
-            setProgress(100);
-            setIsCourseComplete(true);
-        } catch (error) {
-            console.error("Error completing course:", error);
-        }
-    };
-
-    const handleAddReview = async () => {
+    const handleAddReview = useCallback(async () => {
         if (!rating || !comment) {
             alert("Please provide a rating and a comment");
             return;
@@ -80,85 +74,145 @@ const CourseDetailsPage = () => {
             alert(response.data.message);
             setRating(0);
             setComment('');
-            fetchReviews(); // Refresh reviews after adding a new one
+            fetchReviews();
         } catch (error) {
             console.error("Error adding review:", error);
+            setRating(0);
+            setComment('');
         }
+    }, [rating, comment, course._id, token, fetchReviews]);
+
+    const getYoutubeEmbedUrl = (url) => {
+        const videoId = new URL(url).searchParams.get("v");
+        return `https://www.youtube.com/embed/${videoId}`;
+    };
+
+    const handleWatchVideo = (lessonId) => {
+        setActiveVideo(lessonId === activeVideo ? null : lessonId);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('token'); 
+        navigate('/login'); 
     };
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-3xl font-bold mb-4">{course.title}</h1>
-            <p className="text-lg text-gray-700 mb-4">{course.description}</p>
-            <div className="text-lg font-semibold mb-4">Progress: {progress}%</div>
-
-            {course.lessons.map((lesson, index) => (
-                <div key={lesson._id} className="flex items-center mb-2">
-                    <p className="flex-grow">{lesson.title}</p>
+        <div className="min-h-screen p-8 bg-gradient-to-r from-black to-[#2E0249] text-white font-poppins">
+            <div className='flex justify-between'>
+                <Link to="/" className="text-3xl text-white flex font-bold mb-6">
+                    <PiBasketballBold className="text-blue-500 h-8 w-8 mt-1 mr-4" />
+                    Koursely
+                </Link>
+                <div className="flex items-center">
+                    <Profileshortcut />
                     <button
-                        onClick={() => handleUpdateProgress(lesson._id)}
-                        disabled={completedLessons.includes(lesson._id)}
-                        className={`px-4 py-2 rounded ${completedLessons.includes(lesson._id) ? 'bg-gray-300' : 'bg-blue-500 text-white'}`}
+                        onClick={handleLogout}
+                        className='text-black bg-gradient-to-r from-violet-500 to-fuchsia-500 px-4 py-2 rounded 2xl ml-4'
                     >
-                        {completedLessons.includes(lesson._id) ? 'Completed' : 'Mark Complete'}
+                        Logout
                     </button>
                 </div>
-            ))}
-
-            {isCourseComplete ? (
-                <p className="text-green-600 font-bold">Course Completed</p>
-            ) : (
-                <button
-                    onClick={handleCompleteCourse}
-                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition-colors duration-200 mt-4"
-                >
-                    Complete Course
-                </button>
-            )}
-
-            {/* Display Reviews */}
-            <h2 className="text-2xl font-bold mt-8">Course Reviews</h2>
-            <p className="text-lg font-semibold mb-4">Average Rating: {averageRating.toFixed(1)}/5</p>
-            <ul>
-                {reviews.map((review) => (
-                    <li key={review._id} className="border-b border-gray-300 py-4">
-                        <p className="text-lg font-semibold">
-                            {review.userId ? `${review.userId.firstname} ${review.userId.lastname}` : 'Anonymous'} {/* Fallback for userId */}
-                        </p>
-                        <p>Rating: {review.rating} ★</p>
-                        <p>{review.comment}</p>
-                    </li>
-                ))}
-            </ul>
-
-            {/* Add a New Review */}
-            <h2 className="text-2xl font-bold mt-8">Add a Review</h2>
-            <div className="flex items-center mb-4">
-                <p className="mr-4">Your Rating:</p>
-                {[1, 2, 3, 4, 5].map((star) => (
-                    <span
-                        key={star}
-                        onClick={() => setRating(star)}
-                        className={`cursor-pointer text-2xl ${star <= rating ? 'text-yellow-500' : 'text-gray-400'}`}
-                    >
-                        ★
-                    </span>
+            </div>
+            <h1 className="text-4xl font-bold mb-6 text-center">{course?.title}</h1>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {course?.lessons.map((lesson) => (
+                    <div key={lesson._id} className="bg-purple-700 p-4 rounded-lg shadow-lg">
+                        {activeVideo === lesson._id ? (
+                            <iframe
+                                width="100%"
+                                height="250"
+                                src={getYoutubeEmbedUrl(lesson.videoUrl)}
+                                title="YouTube video player"
+                                frameBorder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowFullScreen
+                                className="rounded-lg mb-4"
+                            ></iframe>
+                        ) : (
+                            <img
+                                src={`https://img.youtube.com/vi/${new URL(lesson.videoUrl).searchParams.get("v")}/hqdefault.jpg`}
+                                alt="Lesson Thumbnail"
+                                className="w-full h-48 object-cover rounded-lg mb-4 cursor-pointer"
+                                onClick={() => handleWatchVideo(lesson._id)}
+                            />
+                        )}
+                        <h2 className="text-2xl font-semibold mb-2">{lesson.title}</h2>
+                        <p className="mb-4 text-gray-300">{lesson.content}</p>
+                        <button
+                            onClick={() => handleWatchVideo(lesson._id)}
+                            className="w-full py-2 rounded-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white font-semibold hover:opacity-90 transition-opacity duration-200"
+                        >
+                            {activeVideo === lesson._id ? 'Hide Video' : 'Watch Video'}
+                        </button>
+                        <button
+                            onClick={() => handleUpdateProgress(lesson._id)}
+                            disabled={completedLessons.includes(lesson._id)}
+                            className={`w-full mt-2 py-2 rounded-lg text-white font-semibold ${
+                                completedLessons.includes(lesson._id)
+                                    ? 'bg-gray-400 cursor-not-allowed'
+                                    : 'bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:opacity-90 transition-opacity duration-200'
+                            }`}
+                        >
+                            {completedLessons.includes(lesson._id) ? 'Completed' : 'Mark Complete'}
+                        </button>
+                    </div>
                 ))}
             </div>
-            <textarea
-                className="w-full p-2 border border-gray-300 rounded mb-4"
-                placeholder="Write a comment"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-            />
-            <button
-                onClick={handleAddReview}
-                className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition-colors duration-200"
-            >
-                Submit Review
-            </button>
+
+            {isCourseComplete && (
+                <div className="mt-8 text-center text-green-400 font-bold text-2xl">
+                    Congratulations! You've completed this course.
+                </div>
+            )}
+
+            <h2 className="text-3xl font-bold mt-12 mb-4">Course Reviews</h2>
+            <p className="text-xl mb-8">Average Rating: {averageRating.toFixed(1)}/5</p>
+            <div className="flex mb-8">
+                <div className="w-full md:w-2/3 lg:w-1/2">
+                    {reviews.map((review) => (
+                        <div key={review._id} className="mb-6 bg-purple-800 p-4 rounded-lg shadow-lg">
+                            <p className="text-lg font-semibold">
+                                {review.userId ? `${review.userId.firstname} ${review.userId.lastname}` : 'Anonymous'}
+                            </p>
+                            <p className="text-yellow-500">Rating: {review.rating} ★</p>
+                            <p className="text-gray-300">{review.comment}</p>
+                        </div>
+                    ))}
+                </div>
+            </div>
+
+            <div className="mt-8">
+                <h2 className="text-3xl font-bold mb-4">Add a Review</h2>
+                <div className="flex items-center mb-4">
+                    <p className="mr-4 text-xl">Your Rating:</p>
+                    {[1, 2, 3, 4, 5].map((star) => (
+                        <span
+                            key={star}
+                            onClick={() => setRating(star)}
+                            className={`cursor-pointer text-3xl ${star <= rating ? 'text-yellow-500' : 'text-gray-400'}`}
+                        >
+                            ★
+                        </span>
+                    ))}
+                </div>
+                <div className='flex items-center gap-2 mb-4'>
+                    <textarea
+                        className="w-full md:w-1/2 lg:w-1/3 p-2 border border-gray-400 rounded"
+                        rows="4"
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        placeholder="Write your comment here..."
+                    />
+                    <button
+                        onClick={handleAddReview}
+                        className="px-4 py-2 rounded bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white"
+                    >
+                        Submit
+                    </button>
+                </div>
+            </div>
         </div>
     );
-};
+});
 
 export default CourseDetailsPage;

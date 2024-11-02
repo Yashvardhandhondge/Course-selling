@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { adminAPI } from '../../services/adminApi';
 import { compressImage } from '../../utlis/imageCompressionHelper';
-function Admindetails() {
+
+const Admindetails = React.memo(() => {
   const navigate = useNavigate();
   const [profile, setProfile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
@@ -34,7 +35,27 @@ function Admindetails() {
     fetchProfile();
   }, []);
 
-  const handleImageChange = async (e) => {
+  const formattedCreatedAt = useMemo(() => {
+    if (profile?.createdAt) {
+      const date = new Date(profile.createdAt);
+      return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+             ', ' +
+             date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    return '';
+  }, [profile?.createdAt]);
+
+  const formattedUpdatedAt = useMemo(() => {
+    if (profile?.updatedAt) {
+      const date = new Date(profile.updatedAt);
+      return date.toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) +
+             ', ' +
+             date.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit', hour12: true });
+    }
+    return '';
+  }, [profile?.updatedAt]);
+
+  const handleImageChange = useCallback(async (e) => {
     const file = e.target.files[0];
     if (file) {
       try {
@@ -44,21 +65,21 @@ function Admindetails() {
         console.error('Error compressing image:', error);
       }
     }
-  };
+  }, []);
 
-  const handleEditToggle = () => {
-    setIsEditing(!isEditing);
-  };
+  const handleEditToggle = useCallback(() => {
+    setIsEditing((prev) => !prev);
+  }, []);
 
-  const handleChange = (e) => {
+  const handleChange = useCallback((e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
       [name]: value,
     }));
-  };
+  }, []);
 
-  const handleUpdate = async () => {
+  const handleUpdate = useCallback(async () => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
@@ -70,9 +91,9 @@ function Admindetails() {
         console.error('Failed to update profile:', e);
       }
     }
-  };
+  }, [formData]);
 
-  const handleDelete = async () => {
+  const handleDelete = useCallback(async () => {
     const token = localStorage.getItem('token');
     if (token) {
       try {
@@ -84,41 +105,51 @@ function Admindetails() {
         console.error('Failed to delete profile:', e);
       }
     }
-  };
+  }, [formData.email, navigate]);
 
   return (
-    <div className='h-full flex    max-w-fit'>
+    <div className='h-full flex max-w-fit font-poppins'>
       {profile && !isEditing && (
-
-        <div className='text-white'>
-        
-          <img src={profile.image} className='h-[300px] w-[300px] mt-4 ml-[100px] rounded-full' alt="Profile" />
-          <p className='text-3xl text-white mt-2 ml-[160px] font-sans '>Name :</p>
-          <span className="text-blue-300 ml-[170px] text-4xl font-serif">
-            {profile.firstname} {profile.lastname}
-          </span>
-          <p className='text-3xl text-white mt-2 ml-[160px] font-sans '>Email :</p>
-         
-          <p className="text-blue-300 ml-[170px] text-4xl font-serif">{profile.email}</p>
-          <button onClick={handleEditToggle} className=" ml-[160px] text-black mt-4 px-6 text-2xl font-serif py-2 rounded bg-blue-400 hover:text-white hover:bg-black border hover:border-white border-blue-400 ">
-            Edit
-          </button>
-          <button onClick={handleDelete} className="text-black ml-[30px] mt-4 px-6 text-2xl font-serif py-2 rounded bg-blue-400 hover:text-white hover:bg-black border hover:border-white border-blue-400 ">
-        Delete 
-      </button>
+        <div className='text-white flex'>
+          <div>
+            <img src={profile.image} className='h-[300px] w-[300px] mt-4 ml-[100px] rounded-full' alt="Profile" />
+          </div>
+          <div className='mt-8'>
+            <p className='text-3xl text-white mt-2 ml-[160px]'>Name :</p>
+            <span className="text-purple-500 ml-[170px] text-4xl">
+              {profile.firstname} {profile.lastname}
+            </span>
+            <p className='text-3xl text-white mt-2 ml-[160px]'>Email :</p>
+            <p className="text-purple-500 ml-[170px] text-4xl">{profile.email}</p>
+            <p className='text-3xl text-white mt-2 ml-[160px]'>Created At :</p>
+            <p className="text-purple-500 ml-[170px] text-4xl">{formattedCreatedAt}</p>
+            <p className='text-3xl text-white mt-2 ml-[160px]'>Updated At :</p>
+            <p className="text-purple-500 ml-[170px] text-4xl">{formattedUpdatedAt}</p>
+            <button
+              onClick={handleEditToggle}
+              className="text-white ml-[160px] hover:scale-95 transition-transform mt-4 px-6 text-2xl py-2 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 w-32 hover:bg-black border border-blue-400"
+            >
+              Edit
+            </button>
+            <button
+              onClick={handleDelete}
+              className="text-white ml-[30px] hover:scale-95 transition-transform mt-4 px-6 text-2xl py-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-32 rounded-2xl hover:bg-black border border-blue-400"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       )}
       {isEditing && (
         <div className='flex justify-start flex-col ml-[610px] mt-[100px]'>
-                        <p className="w-full text-blue-500 mr-[900px] text-4xl font-medium  leading-snug font-serif">Edit Profile</p>
-
+          <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug">Edit Profile</p>
           <input
             type="text"
             name="firstname"
             value={formData.firstname}
             onChange={handleChange}
             placeholder="First Name"
-            className='border placeholder-black p-2 mb-[20px] font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md'
+            className='border placeholder-black p-2 mb-[20px] mt-5 focus:outline-none focus:border-black w-[300px] rounded-2xl'
           />
           <input
             type="text"
@@ -126,7 +157,7 @@ function Admindetails() {
             value={formData.lastname}
             onChange={handleChange}
             placeholder="Last name"
-            className='border placeholder-black mb-[20px] font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md'
+            className='border placeholder-black mb-[20px] focus:outline-none focus:border-black w-[300px] rounded-2xl'
           />
           <input
             type="email"
@@ -134,16 +165,25 @@ function Admindetails() {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className='border placeholder-black mb-[20px] font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md'
+            className='border placeholder-black mb-[20px] focus:outline-none focus:border-black w-[300px] rounded-2xl'
           />
-          <input type="file" name="image" className='border mb-[20px] placeholder-black font-serif focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-base block bg-slate-300 border-gray-300 rounded-md' onChange={handleImageChange} />
-          <button className='inline-block  w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1  text-xl font-medium text-center text-white bg-indigo-500 rounded-lg transition duration-200 hover:bg-white hover:text-black border-solid ease' onClick={handleUpdate}>Save Changes</button>
-          <button onClick={handleEditToggle}>Cancel</button>
+          <input
+            type="file"
+            name="image"
+            onChange={handleImageChange}
+            className='border mb-[20px] placeholder-black focus:outline-none w-[300px] rounded-2xl'
+          />
+          <button
+            className='inline-block w-[300px] pt-3 text-xl font-medium text-center text-white bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl transition duration-200 hover:bg-white hover:text-black ease'
+            onClick={handleUpdate}
+          >
+            Save Changes
+          </button>
+          <button onClick={handleEditToggle} className="text-white mt-4">Cancel</button>
         </div>
       )}
-  
     </div>
   );
-}
+});
 
 export default Admindetails;

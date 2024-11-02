@@ -15,7 +15,7 @@ function HomePage()  {
             <div className='flex justify-between items-center'>
             <div className="text-4xl flex text-white font-poppins ml-14 font-extrabold">
                 
-            <PiBasketballBold className='mr-5 text-blue-500 h-10' />   Koursely
+            <PiBasketballBold className='mr-5 text-blue-500 font-poppins h-10' />   Koursely
             </div>
            <div className='flex justify-center  space-x-10'>
            <Student />

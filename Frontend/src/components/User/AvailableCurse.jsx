@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { courseAPI } from '../../services/courseAPI';  
 import ExploreCourseCard from './ExploreCourse';
 import Search from './Search'; 
 import debounce from 'lodash.debounce'; 
+import Profileshortcut from './profileshortcut';
 
 const MyCoursesPage = () => {
     const [myCourses, setMyCourses] = useState([]);
@@ -12,8 +13,8 @@ const MyCoursesPage = () => {
     useEffect(() => {
         const fetchMyCourses = async () => {
             try {
-                const token = localStorage.getItem('token'); // Retrieve token from local storage
-                const response = await courseAPI.getMyCourses(token); // Adjust API method to fetch user courses
+                const token = localStorage.getItem('token'); 
+                const response = await courseAPI.getMyCourses(token); 
                 setMyCourses(response.data.courses);
                 setLoading(false);
             } catch (error) {
@@ -25,23 +26,25 @@ const MyCoursesPage = () => {
         fetchMyCourses();
     }, []);
 
-    const handleSearch = (term) => {
+    const handleSearch = useCallback((term) => {
         setSearchTerm(term);
-    };
+    }, []);
 
-    const debouncedSearch = debounce(handleSearch, 300);
+    const debouncedSearch = useCallback(debounce(handleSearch, 300), []);
 
-    const filteredCourses = myCourses.filter
-    (course =>
+    const filteredCourses = myCourses.filter(course =>
         course.title.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
-        <div className="container mx-auto p-4">
-            <h1 className="text-2xl font-bold mb-4">My Courses</h1>
-            <Search onSearch={debouncedSearch} />
+        <div className="container mx-auto">
+            <div className='flex justify-between'>
+                <h1 className="text-2xl font-bold text-white font-poppins mb-4">Purchased Courses</h1>
+                <Search onSearch={debouncedSearch} />
+                <Profileshortcut />
+            </div>
             {loading ? (
-                <p>Loading...</p>
+                <p className="font-poppins text-white">Loading...</p>
             ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     {filteredCourses.map(course => (

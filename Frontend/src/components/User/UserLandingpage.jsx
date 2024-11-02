@@ -1,163 +1,174 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { courseAPI } from '../../services/courseAPI';
 import { wishlistAPI } from '../../services/wishlistAPI';
-import { analyticsAPI } from '../../services/Analytics';// Import the analytics API
+import { analyticsAPI } from '../../services/Analytics';
 import CourseCard from './CourseCard';
 import Search from './Search';
 import debounce from 'lodash.debounce';
 import MyCoursesPage from './AvailableCurse';
 import { AiOutlineHeart } from 'react-icons/ai';
-import { userAPI } from '../../services/userAPI';
-import { Link } from 'react-router-dom';
+import Profileshortcut from './profileshortcut';
+import { Link, useNavigate } from 'react-router-dom';
+import { PiBasketballBold } from "react-icons/pi";
+import { FiLogOut, FiBookOpen, FiShoppingCart } from 'react-icons/fi';
+
 const UserLandingPage = () => {
     const [courses, setCourses] = useState([]);
     const [wishlist, setWishlist] = useState([]);
     const [recommendations, setRecommendations] = useState([]);
-    const [mostViewedCourses, setMostViewedCourses] = useState([]); // State for most viewed courses
+    const [mostViewedCourses, setMostViewedCourses] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
-    const [loading, setLoading] = useState(true);
-    const [showWishlist, setShowWishlist] = useState(false);
+    const [activeSection, setActiveSection] = useState('availableCourses');
     const token = localStorage.getItem('token');
     const userId = localStorage.getItem('userId');
-    const[userData,setUserData] = useState({firstname:'',image:""})
-    useEffect(() => {
-        fetchCourses();
-        fetchWishlist();
-        fetchRecommendations();
-        fetchMostViewedCourses(); 
-        const fetchUserData = async () => {
-            try {
-                const token = localStorage.getItem('token');
-                const response = await userAPI.fetchProfile(token);
-                setUserData(response.data.user);
-            } catch (error) {
-                console.error("Error fetching user data:", error);
-            }
-        };
+    const [userData, setUserData] = useState({ firstname: '', image: '' });
+    const navigate = useNavigate();
 
-        fetchUserData();
-        
-    }, []);
-
-    const fetchCourses = async () => {
+    const fetchCourses = useCallback(async () => {
         try {
             const response = await courseAPI.getAllCourses(token);
             setCourses(response.data.courses);
-            setLoading(false);
         } catch (error) {
             console.error("Error fetching courses:", error);
-            setLoading(false);
         }
-    };
+    }, [token]);
 
-    const fetchWishlist = async () => {
+    const fetchWishlist = useCallback(async () => {
         try {
             const response = await wishlistAPI.getWishlist(userId, token);
             setWishlist(response.data.wishlist.courses);
         } catch (error) {
             console.error("Error fetching wishlist:", error);
         }
-    };
+    }, [userId, token]);
 
-    const fetchRecommendations = async () => {
+    const fetchRecommendations = useCallback(async () => {
         try {
             const response = await wishlistAPI.getRecommendations(userId, token);
             setRecommendations(response.data.recommendations);
         } catch (error) {
             console.error("Error fetching recommendations:", error);
         }
-    };
+    }, [userId, token]);
 
-    const fetchMostViewedCourses = async () => {
+    const fetchMostViewedCourses = useCallback(async () => {
         try {
             const response = await analyticsAPI.getMostViewedCourses(token);
-            setMostViewedCourses(response.data.mostViewedCourses); // Set the most viewed courses
+            setMostViewedCourses(response.data.mostViewedCourses);
         } catch (error) {
             console.error("Error fetching most viewed courses:", error);
         }
-    };
+    }, [token]);
 
-    const handleSearch = (term) => setSearchTerm(term);
-    const debouncedSearch = debounce(handleSearch, 300);
-    const filteredCourses = courses.filter(course => course.title.toLowerCase().includes(searchTerm.toLowerCase()));
+    useEffect(() => {
+        fetchCourses();
+        fetchWishlist();
+        fetchRecommendations();
+        fetchMostViewedCourses();
+    }, [fetchCourses, fetchWishlist, fetchRecommendations, fetchMostViewedCourses]);
 
-    const toggleWishlist = () => setShowWishlist(!showWishlist);
-    const handleWishlistUpdate = () => fetchWishlist();
+    const handleSearch = useCallback((term) => setSearchTerm(term), []);
+    const debouncedSearch = useMemo(() => debounce(handleSearch, 300), [handleSearch]);
+
+    const filteredCourses = useMemo(
+        () => courses.filter(course => course.title.toLowerCase().includes(searchTerm.toLowerCase())),
+        [courses, searchTerm]
+    );
+
+    const handleLogout = useCallback(() => {
+        localStorage.removeItem('token');
+        localStorage.removeItem('userId');
+        navigate('/');
+    }, [navigate]);
 
     return (
-        <div className="container mx-auto p-4">
-            <header>
-                <Link to="/user/profile" className="profile-link">
-                    {userData.image && (
-                        <img src={userData.image} alt="User Avatar" className="profile-image" />
-                    )}
-                    <span>{userData.firstname}</span>
-                </Link>
-            </header>
-            <div className="bg-gray-100 p-4 rounded mb-4">
-                <h2 className="text-xl font-bold mb-2">Most Viewed Courses</h2>
-                <ul>
-                    {mostViewedCourses.length > 0 ? (
-                        mostViewedCourses.map(course => (
-                            <li key={course._id} className="border-b py-2">{course._id} - {course.count} views</li>
-                        ))
-                    ) : (
-                        <li>No data available</li>
-                    )}
-                </ul>
-            </div>
-
-            {/* Courses Section */}
-            <div className="flex justify-between items-center mb-4">
-                <h1 className="text-2xl font-bold">Courses</h1>
-                <button onClick={toggleWishlist} className="text-red-500 text-2xl">
-                    <AiOutlineHeart />
-                </button>
-            </div>
-
-            <Search onSearch={debouncedSearch} />
-            
-            {showWishlist && (
-                <div className="absolute right-0 mt-2 w-64 bg-white border border-gray-200 rounded shadow-lg p-4 z-10">
-                    <h2 className="font-semibold text-lg mb-2">My Wishlist</h2>
-                    {wishlist.length > 0 ? (
-                        wishlist.map(course => (
-                            <div key={course._id} className="flex justify-between items-center mb-2">
-                                <p>{course.title}</p>
-                                <button
-                                    onClick={() => wishlistAPI.deleteFromWishlist({ courseId: course._id }, token).then(fetchWishlist)}
-                                    className="text-red-500"
-                                >
-                                    Remove
-                                </button>
-                            </div>
-                        ))
-                    ) : (
-                        <p>No courses in wishlist</p>
-                    )}
-                </div>
-            )}
-
-            <div>
-                <p>Purchased Courses</p>
-                <MyCoursesPage />
+        <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249]">
+            <Sidebar 
+                activeSection={activeSection} 
+                setActiveSection={setActiveSection} 
+                userData={userData} 
+                handleLogout={handleLogout} 
+            />
+            <main className="flex-1 p-6 font-poppins"> {/* Add the font class here */}
+                {activeSection === 'availableCourses' && (
+                    <>
+                    <div className='flex justify-between'>
+                        <h2 className="text-2xl font-bold text-white mb-4 mr-8">Available Courses</h2>
+                        <Search onSearch={debouncedSearch} />
+                        <Profileshortcut />
+                    </div>
+                        <div className="grid grid-cols-1 mt-4 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {filteredCourses.map(course => (
+                                <CourseCard key={course._id} course={course} wishlist={wishlist} onUpdateWishlist={fetchWishlist} />
+                            ))}
+                        </div>
+                    </>
+                )}
                 
-                <h2 className="text-xl font-bold mt-6 mb-2">Available Courses</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {filteredCourses.map(course => (
-                        <CourseCard key={course._id} course={course} onUpdateWishlist={handleWishlistUpdate} />
-                    ))}
-                </div>
+                {activeSection === 'purchasedCourses' && (
+                    <MyCoursesPage />
+                )}
                 
-                <h2 className="text-xl font-bold mt-6 mb-2">Recommended Courses</h2>
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    {recommendations.map(course => (
-                        <CourseCard key={course._id} course={course} onUpdateWishlist={handleWishlistUpdate} />
-                    ))}
-                </div>
-            </div>
+                {activeSection === 'wishlist' && (
+                    <>
+                        <div className='flex justify-between'>
+                        <h2 className="text-2xl font-bold text-white mb-4">Wishlist</h2>
+                        <Search onSearch={debouncedSearch} />
+                        <Profileshortcut />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {wishlist.map(course => (
+                                <CourseCard key={course._id} course={course} wishlist={wishlist} onUpdateWishlist={fetchWishlist} />
+                            ))}
+                        </div>
+                    </>
+                )}
+                
+                {activeSection === 'recommendations' && (
+                    <>
+                     <div className='flex justify-between'>
+                        <h2 className="text-2xl font-bold text-white mb-4">Recommended Courses</h2>
+                        <Search onSearch={debouncedSearch} />
+                        <Profileshortcut />
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                            {recommendations.map(course => (
+                                <CourseCard key={course._id} course={course} onUpdateWishlist={fetchWishlist} />
+                            ))}
+                        </div>
+                    </>
+                )}
+            </main>
         </div>
     );
 };
+
+const Sidebar = React.memo(({ activeSection, setActiveSection, userData, handleLogout }) => (
+    <aside className="w-64 bg-gray-800 p-4">
+        <Link to="/" className="text-3xl text-white flex font-bold mb-6">
+            <PiBasketballBold className="text-blue-500 h-8 w-8 mt-1 mr-4" />
+            Koursely
+        </Link>
+        <nav className="flex flex-col space-y-4">
+            <NavButton title="Available Courses" icon={<FiBookOpen />} active={activeSection === 'availableCourses'} onClick={() => setActiveSection('availableCourses')} />
+            <NavButton title="Purchased Courses" icon={<FiShoppingCart />} active={activeSection === 'purchasedCourses'} onClick={() => setActiveSection('purchasedCourses')} />
+            <NavButton title="Wishlist" icon={<AiOutlineHeart />} active={activeSection === 'wishlist'} onClick={() => setActiveSection('wishlist')} />
+            <button onClick={handleLogout} className="flex items-center text-red-500 py-2 px-3 rounded">
+                <FiLogOut className="mr-3" />
+                Logout
+            </button>
+        </nav>
+    </aside>
+));
+
+const NavButton = React.memo(({ title, icon, active, onClick }) => (
+    <button 
+        className={`flex items-center text-white py-2 px-3 rounded ${active ? 'bg-purple-700' : ''}`} 
+        onClick={onClick}
+    >
+        {icon}
+        <span className="ml-3">{title}</span>
+    </button>
+));
 
 export default UserLandingPage;
