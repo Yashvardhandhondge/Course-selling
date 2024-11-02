@@ -8,7 +8,7 @@ app.use(express.json({limit:'10mb'}));
 const port = 3000;
 
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: 'https://course-selling-hjzf.vercel.app/', 
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true 
   }));
