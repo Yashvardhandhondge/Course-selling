@@ -137,7 +137,7 @@ const Signup = React.memo(() => {
             />
           </div>
 
-          <button type="submit" className={buttonClass}>
+          <button type="submit" className={buttonClass} onClick={handleSubmit}>
             Sign Up
           </button>
 
