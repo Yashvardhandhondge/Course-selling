@@ -1,7 +1,7 @@
 import React from 'react'
 import Card from './Card'
 import AdminNavbar from './Navbar'
-import Fetchadmin from './fetchadmin'
+import Fetchadmin from './FetchAdmin'
 import Chatbot from '../Home/Chatbot'
 function CreatedCourses() {
   return (

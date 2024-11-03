@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { adminAPI } from "../../services/adminApi";
-import Fetchadmin from "./fetchadmin";
+import Fetchadmin from "./FetchAdmin";
 import AdminNavbar from "./Navbar";
 import Chatbot from "../Home/Chatbot";
 export default function CourseDetails() {
