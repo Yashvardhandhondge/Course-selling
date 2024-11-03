@@ -38,7 +38,7 @@ function UserDashboard() {
   if (loading) return <p>Loading...</p>;
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-black to-[#2E0249] p-8 font-poppins text-white">
+    <div className="min-h-screen bg-gradient-to-r from-black to-[#2E0249] p-8 font-poppins text-white ">
       <div className='flex justify-between mb-6'>
         <Link to="/" className="text-3xl text-white flex font-bold">
           <PiBasketballBold className="text-blue-500 h-8 w-8 mt-1 mr-4" />

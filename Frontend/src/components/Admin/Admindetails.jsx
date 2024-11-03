@@ -108,9 +108,9 @@ const Admindetails = React.memo(() => {
   }, [formData.email, navigate]);
 
   return (
-    <div className='min-h-screen flex flex-col items-center font-poppins text-white p-4 sm:p-8'>
+    <div className='min-h-screen flex   font-poppins text-white p-4 sm:p-8 ml-12 lg:ml-64 '>
       {profile && !isEditing && (
-        <div className="flex flex-col items-center space-y-4 w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
+        <div className="flex flex-col items-center space-y-4  sm:max-w-md md:max-w-lg lg:max-w-xl">
           <img src={profile.image} className="h-40 w-40 rounded-full object-cover" alt="Profile" />
           <div className="flex flex-col items-center text-center space-y-2">
             <p className="text-xl font-semibold">Name:</p>

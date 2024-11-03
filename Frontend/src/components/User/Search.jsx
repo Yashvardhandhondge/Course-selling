@@ -7,7 +7,7 @@ const Search = React.memo(({ onSearch }) => {
     };
 
     return (
-        <div className="flex h-8 mt-4 sm:mt-4 lg:mt-0 sm:h-8 lg:h-12 items-center border rounded bg-purple-700 p-1 max-w-md w-full">
+        <div className="flex h-8 mt-4 sm:mt-4 lg:mt-0 sm:h-8 lg:h-12 items-center border rounded bg-purple-700 p-1 max-w-md w-full ">
             <FaSearch className="text-white mr-2" />
             <input
                 type="text"

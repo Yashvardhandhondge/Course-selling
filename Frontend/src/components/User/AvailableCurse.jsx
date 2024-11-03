@@ -3,7 +3,7 @@ import { courseAPI } from '../../services/courseAPI';
 import ExploreCourseCard from './ExploreCourse';
 import Search from './Search'; 
 import debounce from 'lodash.debounce'; 
-import ProfileShortcut from './Profile';
+import Profileshortcut from './Profile';
 
 
 const MyCoursesPage = () => {
@@ -43,7 +43,7 @@ const MyCoursesPage = () => {
            
                 <h1 className="text-2xl font-bold text-white font-poppins mb-4">Purchased Courses</h1>
                 <Search onSearch={debouncedSearch} />
-                <Profileshortcut />
+                <Profileshortcut/>
             </div>
             {loading ? (
                 <p className="font-poppins text-white">Loading...</p>

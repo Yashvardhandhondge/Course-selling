@@ -98,10 +98,10 @@ const CourseDetailsPage = React.memo(() => {
         navigate('/login'); 
     };
     return (
-        <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249]">
+        <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249]  ">
             <Sidebar handleLogout={handleLogout} />
      
-            <div className="flex-grow p-4 sm:p-6 md:p-8 text-white font-poppins">
+            <div className="flex-grow p-4 sm:p-6 md:p-8 text-white font-poppins ml-12 lg:ml-64">
                 <div className='flex flex-col md:flex-row justify-between items-center'>
                     <h1 className="text-4xl font-bold mb-6 text-center">{course?.title}</h1>
                     <Profileshortcut />

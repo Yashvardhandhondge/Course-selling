@@ -94,7 +94,7 @@ function CourseFormModal() {
   return (
     <div className="flex">
       <Navbar />
-      <div className="flex-grow h-screen bg-black p-4 font-poppins ml-64">
+      <div className="flex-grow h-screen bg-black p-4 font-poppins ml-12 lg:ml-64">
       <div className="w-full h-full bg-black overflow-y-auto p-8">
         <div className='flex justify-between'>
         <h2 className="text-3xl font-semibold mb-6 text-purple-500">

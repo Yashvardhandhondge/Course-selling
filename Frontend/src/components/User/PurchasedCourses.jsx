@@ -39,11 +39,11 @@ const PurchasedCourses = () => {
     }, [navigate]);
 
     return (
-        <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249]">
+        <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249] ">
             <Sidebar handleLogout={handleLogout} />
-            <div className="flex-1 p-4">
+            <div className="flex-1 p-4 ml-12 lg:ml-64">
                 <div className='flex justify-between'>
-                    <h2 className="text-2xl font-bold text-white mb-6">My Courses</h2>
+                    <h2 className="text-2xl font-bold text-white mb-6 hidden sm:hidden lg:inline-block">My Courses</h2>
                     <Search />
                     <Profileshortcut />
                 </div>

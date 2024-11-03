@@ -71,13 +71,13 @@ const UserLandingPage = () => {
     };
 
     return (
-        <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249]">
+        <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249] ">
             <Sidebar 
                 activeSection={activeSection} 
                 setActiveSection={setActiveSection} 
                 handleLogout={handleLogout} 
             />
-            <main className="flex-1 p-6 font-poppins">
+            <main className="flex-1 p-6 font-poppins ml-12 lg:ml-64">
                 {renderContent()}
             </main>
         </div>

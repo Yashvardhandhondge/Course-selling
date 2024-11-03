@@ -30,7 +30,7 @@ const AdminLandingPage = React.memo(() => {
   return (
     <div className="flex">
       <AdminNavbar />
-      <div className="flex-grow min-h-screen bg-black p-4 font-poppins ml-64">
+      <div className="flex-grow min-h-screen bg-black p-4 font-poppins ml-12 lg:ml-64">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl text-purple-500">Admin Dashboard</h1>
           {profile && (

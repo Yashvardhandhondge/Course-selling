@@ -6,7 +6,7 @@ function AdminProfile() {
   return (
     <div className="flex">
       <AdminNavbar />
-      <div className="flex-grow min-h-screen bg-black p-4 font-poppins ml-64">
+      <div className="flex-grow min-h-screen bg-black p-4 font-poppins ">
         <div className="flex justify-between items-center mb-4">
        <Admindetails/>
        <Chatbot/>

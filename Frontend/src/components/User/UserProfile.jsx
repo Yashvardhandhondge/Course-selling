@@ -126,19 +126,19 @@ const UserProfile = React.memo(() => {
   }, [navigate]);
 
   return (
-    <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249]">
+    <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249] ">
             <Sidebar handleLogout={handleLogout} />
       
         {profile && !isEditing ? (
 
-<div className="flex justify-center items-center  ml-0 sm:ml-[10px] lg:ml-[300px]   p-4">
-<div className="text-purple-600 flex flex-col items-center p-4 sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+<div className="flex justify-center items-center   sm:ml-[10px]  ml-12 lg:ml-64  p-4">
+<div className="text-purple-600 flex flex-col items-center p-4 ml-[20px] sm:ml-[30px] lg:ml-[290px] sm: sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
     <img
         src={profile.image}
         className="h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 rounded-full object-cover"
         alt="Profile"
     />
-    <div className="mt-4 sm:mt-6 text-center">
+    <div className="mt-4 sm:mt-6 text-center ">
         <h2 className="text-2xl sm:text-3xl md:text-4xl text-purple-500 font-poppins">
             {`${profile.firstname} ${profile.lastname}`}
         </h2>
@@ -171,7 +171,7 @@ const UserProfile = React.memo(() => {
 
         
         ) : (
-          <div className="flex items-center justify-center min-h-screen ml-0 sm:ml-1 md:ml-[150px] lg:ml-[300px]  p-4">
+          <div className="flex items-center justify-center min-h-screen  sm:ml-1 md:ml-[150px] lg:ml-[300px] ml-12 lg:ml-64  p-4">
           <div className="flex flex-col items-center p-4 sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md">
               <h2 className="text-purple-500 text-2xl sm:text-3xl font-medium mb-4 text-center">Edit Profile</h2>
               <input

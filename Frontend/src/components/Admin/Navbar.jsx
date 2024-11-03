@@ -44,7 +44,7 @@ const AdminNavbar = React.memo(() => {
   );
 
   return (
-    <div className={`flex flex-col h-full w-64 bg-black p-4 font-poppins fixed transition-all duration-300 ease-in-out ${isOpen ? 'pb-8' : ''}`}>
+    <div className={`flex flex-col h-full  bg-black p-4 font-poppins fixed transition-all duration-300 ease-in-out ${isOpen ? 'w-64 pb-8' : ''}`}>
       <div className="flex items-">
 
         <button onClick={toggleMenu} className="md:hidden ml-auto text-white">
@@ -79,7 +79,7 @@ const AdminNavbar = React.memo(() => {
         </button>
       </nav>
 
-      <div className="flex-grow"></div> {/* This will push the profile icon and logout button to the bottom */}
+      <div className="flex-grow"></div>
       
       <div className="mt-auto flex flex-col items-center">
       </div>

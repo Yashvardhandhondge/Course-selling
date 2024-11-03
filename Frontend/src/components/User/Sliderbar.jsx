@@ -1,41 +1,78 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { FiLogOut, FiBookOpen, FiShoppingCart,FiUser } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { FiLogOut, FiBookOpen, FiShoppingCart, FiUser, FiMenu } from 'react-icons/fi';
 import { AiOutlineHeart } from 'react-icons/ai';
 import { PiBasketballBold } from "react-icons/pi";
 
-const Sidebar = ({ activeSection, setActiveSection, handleLogout }) => (
-    <aside className="w-64 bg-black p-4">
-        <Link to="/user/landing" className="text-3xl text-white flex font-bold mb-6">
-            <PiBasketballBold className="text-blue-500 h-8 w-8 mt-1 mr-4" />
-            Koursely
+const UserNavbar = ({ activeSection, setActiveSection, handleLogout }) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
+  return (
+    <div className={`flex flex-col h-full bg-black p-4 fixed transition-all duration-300 ease-in-out ${isOpen ? 'w-64 pb-8' : ''}`}>
+      <div className="flex items-center justify-between">
+       
+        <button onClick={toggleMenu} className="md:hidden text-white">
+          <FiMenu className="text-3xl" />
+        </button>
+      </div>
+
+      <nav className={`flex flex-col space-y-4 text-white ${isOpen ? 'block' : 'hidden'} md:block`}>
+      <Link to="/user/landing" className="flex items-center text-3xl text-white font-bold mb-6">
+          <PiBasketballBold className="text-blue-500 h-8 w-8 mr-2" />
+          Koursely
         </Link>
-        <nav className="flex flex-col space-y-4">
-         <Link to='/user/landing'>   <NavButton title="Available Courses" icon={<FiBookOpen />} active={activeSection === 'availableCourses'} onClick={() => setActiveSection('availableCourses')} /></Link>
-         <Link to='/user/purchased'>   <NavButton title="Purchased Courses" icon={<FiShoppingCart />} active={activeSection === 'purchasedCourses'} onClick={() => setActiveSection('purchasedCourses')} /></Link>
-        <Link to='/user/wishlist'>    <NavButton title="Wishlist" icon={<AiOutlineHeart />} active={activeSection === 'wishlist'} onClick={() => setActiveSection('wishlist')} /></Link>
-          
-            <Link to="/user/profile" className={`flex items-center text-white py-2 px-3 rounded  'bg-purple-700' `}> 
-          <FiUser className="mr-2" />
-          Profile
-        </Link>
-            
-            <button onClick={handleLogout} className="flex items-center text-red-500 py-2 px-3 rounded">
-                <FiLogOut className="mr-3" />
-                Logout
-            </button>
-        </nav>
-    </aside>
+        <NavButton 
+          to="/user/landing" 
+          icon={FiBookOpen} 
+          title="Available Courses" 
+          active={activeSection === 'availableCourses'}
+          onClick={() => setActiveSection('availableCourses')}
+        />
+        <NavButton 
+          to="/user/purchased" 
+          icon={FiShoppingCart} 
+          title="Purchased Courses" 
+          active={activeSection === 'purchasedCourses'}
+          onClick={() => setActiveSection('purchasedCourses')}
+        />
+        <NavButton 
+          to="/user/wishlist" 
+          icon={AiOutlineHeart} 
+          title="Wishlist" 
+          active={activeSection === 'wishlist'}
+          onClick={() => setActiveSection('wishlist')}
+        />
+        <NavButton 
+          to="/user/profile" 
+          icon={FiUser} 
+          title="Profile"
+        />
+        <button 
+          onClick={handleLogout} 
+          className="flex items-center text-red-500 hover:text-red-400"
+        >
+          <FiLogOut className="mr-3" />
+          Logout
+        </button>
+      </nav>
+    </div>
+  );
+};
+
+const NavButton = ({ to, icon: Icon, title, active, onClick }) => (
+  <Link 
+    to={to}
+    onClick={onClick}
+    className={`flex items-center text-white hover:text-purple-400 py-2 px-3 rounded ${active ? 'bg-purple-700' : ''}`}
+  >
+    <Icon className="mr-2" size={20} />
+    {title}
+  </Link>
 );
 
-const NavButton = ({ title, icon, active, onClick }) => (
-    <button 
-        className={`flex items-center text-white py-2 px-3 rounded ${active ? 'bg-purple-700' : ''}`} 
-        onClick={onClick}
-    >
-        {icon}
-        <span className="ml-3">{title}</span>
-    </button>
-);
-
-export default Sidebar;
+export default UserNavbar;

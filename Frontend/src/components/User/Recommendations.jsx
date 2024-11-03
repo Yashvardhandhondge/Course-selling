@@ -5,7 +5,7 @@ import Profileshortcut from './Profile';
 
 const Recommendations = ({ recommendations }) => (
     <>
-        <div className="flex justify-between">
+        <div className="flex justify-between ml-12 lg:ml-64">
             <h2 className="text-2xl font-bold text-white mb-4">Recommended Courses</h2>
             <Search />
             <Profileshortcut />

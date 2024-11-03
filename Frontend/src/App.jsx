@@ -10,10 +10,10 @@ import AdminSignin from './components/Admin/AdminSigin';
 import Signup from './components/User/Signup';
 import { authService } from './services/authservices';
 import UserLandingpage from './components/User/UserLandingpage'
-import AdminLandingPage from './components/Admin/AdminLandingPage';
+import AdminLandingPage from './components/Admin/AdminLanding';
 import AdminProfile from './components/Admin/AdminProfile';
 import CourseFormModal from './components/Admin/CourseModalForm';
-import CourseDetails from './components/Admin/CoursePage';
+import CourseDetails from './components/Admin/CoursePage.';
 import AddLessons from './components/Admin/Addlessons';
 import PaymentConfirmation from './components/User/PaymentConfiguration';
 import CourseDetailsPage from './components/User/CourseDeatilsPage';
