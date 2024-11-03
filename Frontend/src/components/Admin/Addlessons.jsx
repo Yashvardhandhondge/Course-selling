@@ -2,7 +2,6 @@ import React, { useState, useCallback } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { adminAPI } from '../../services/adminApi';
 import AdminNavbar from './Navbar';
-import Fetchadmin from './fetchadmin';
 import Chatbot from '../Home/Chatbot';
 
 function AddLessons() {
@@ -48,7 +47,7 @@ function AddLessons() {
             <div className="flex-grow h-screen bg-black p-4 font-poppins text-white ml-64">
                 <div className="flex justify-between items-center">
                     <h2 className="text-lg font-bold text-purple-400">Add Lessons</h2>
-                    <Fetchadmin />
+                    {/* <Fetchadmin /> */}
                 </div>
 
                 {success && <p className="text-green-500 mb-4">{success}</p>}
