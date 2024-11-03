@@ -33,18 +33,18 @@ const Chatbot = React.memo(({ token }) => {
   };
 
   return (
-    <div className="fixed bottom-4 right-4">
+    <div className="fixed bottom-4 right-4 z-50">
       {!showChat && (
         <button
           onClick={handleToggleChat}
-          className="bg-purple-400 p-3 w-24 rounded-full shadow-lg focus:outline-none text-white font-poppins hover:bg-purple-500 transition-transform transform hover:scale-105"
+          className="bg-purple-400 p-3 w-24 rounded-full shadow-lg focus:outline-none text-white font-poppins hover:bg-purple-700 transition-transform transform hover:scale-105"
         >
           Ask AI!
         </button>
       )}
 
       {showChat && (
-        <div className="w-72 h-96 rounded-lg shadow-lg border border-solid border-blue-400 bg-purple-950 p-4 flex flex-col">
+        <div className="w-72 sm:w-80 md:w-96 h-96 md:h-[28rem] lg:w-[24rem] lg:h-[30rem] rounded-lg shadow-lg border border-solid border-blue-400 bg-purple-950 p-4 flex flex-col">
           <div className="flex justify-between items-center mb-4">
             <h3 className="text-lg font-bold text-white font-poppins">Chat with Us</h3>
             <button
@@ -55,7 +55,7 @@ const Chatbot = React.memo(({ token }) => {
             </button>
           </div>
 
-          <div className="flex-grow overflow-y-auto mb-4">
+          <div className="flex-grow overflow-y-auto mb-4 space-y-2">
             {chatHistory.length === 0 ? (
               <p className="text-gray-500 text-center font-poppins">
                 Start a conversation about your career direction!
@@ -64,7 +64,7 @@ const Chatbot = React.memo(({ token }) => {
               chatHistory.map((chat, index) => (
                 <div
                   key={index}
-                  className={`mb-2 p-2 rounded-md max-w-[80%] font-poppins ${
+                  className={`p-2 rounded-md max-w-[80%] font-poppins ${
                     chat.type === 'user' ? 'bg-black text-white ml-auto border border-blue-400' : 'bg-black text-white border border-purple-400 mr-auto'
                   }`}
                 >
@@ -86,7 +86,7 @@ const Chatbot = React.memo(({ token }) => {
               type="submit"
               className="bg-purple-700 cursor-pointer text-white p-2 rounded-md focus:outline-none hover:bg-purple-600 transition-transform transform hover:scale-105"
             >
-              <AiOutlineSend className='text-black' />
+              <AiOutlineSend className="text-black" />
             </button>
           </form>
         </div>

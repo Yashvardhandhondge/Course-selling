@@ -108,56 +108,57 @@ const Admindetails = React.memo(() => {
   }, [formData.email, navigate]);
 
   return (
-    <div className='h-full flex max-w-fit font-poppins'>
+    <div className='min-h-screen flex flex-col items-center font-poppins text-white p-4 sm:p-8'>
       {profile && !isEditing && (
-        <div className='text-white flex'>
-          <div>
-            <img src={profile.image} className='h-[300px] w-[300px] mt-4 ml-[100px] rounded-full' alt="Profile" />
-          </div>
-          <div className='mt-8'>
-            <p className='text-3xl text-white mt-2 ml-[160px]'>Name :</p>
-            <span className="text-purple-500 ml-[170px] text-4xl">
+        <div className="flex flex-col items-center space-y-4 w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
+          <img src={profile.image} className="h-40 w-40 rounded-full object-cover" alt="Profile" />
+          <div className="flex flex-col items-center text-center space-y-2">
+            <p className="text-xl font-semibold">Name:</p>
+            <span className="text-purple-500 text-2xl">
               {profile.firstname} {profile.lastname}
             </span>
-            <p className='text-3xl text-white mt-2 ml-[160px]'>Email :</p>
-            <p className="text-purple-500 ml-[170px] text-4xl">{profile.email}</p>
-            <p className='text-3xl text-white mt-2 ml-[160px]'>Created At :</p>
-            <p className="text-purple-500 ml-[170px] text-4xl">{formattedCreatedAt}</p>
-            <p className='text-3xl text-white mt-2 ml-[160px]'>Updated At :</p>
-            <p className="text-purple-500 ml-[170px] text-4xl">{formattedUpdatedAt}</p>
+            <p className="text-xl font-semibold">Email:</p>
+            <p className="text-purple-500 text-2xl">{profile.email}</p>
+            <p className="text-xl font-semibold">Created At:</p>
+            <p className="text-purple-500 text-xl">{formattedCreatedAt}</p>
+            <p className="text-xl font-semibold">Updated At:</p>
+            <p className="text-purple-500 text-xl">{formattedUpdatedAt}</p>
+          </div>
+          <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mt-4 ml-0  w-full">
             <button
               onClick={handleEditToggle}
-              className="text-white ml-[160px] hover:scale-95 transition-transform mt-4 px-6 text-2xl py-2 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 w-32 hover:bg-black border border-blue-400"
+              className="w-full sm:w-auto px-4 py-2 rounded-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-black transition-transform text-xl"
             >
               Edit
             </button>
             <button
               onClick={handleDelete}
-              className="text-white ml-[30px] hover:scale-95 transition-transform mt-4 px-6 text-2xl py-2 bg-gradient-to-r from-violet-500 to-fuchsia-500 w-32 rounded-2xl hover:bg-black border border-blue-400"
+              className="w-full sm:w-auto px-4 py-2  rounded-lg bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-black transition-transform text-xl"
             >
               Delete
             </button>
           </div>
         </div>
       )}
+
       {isEditing && (
-        <div className='flex justify-start flex-col ml-[610px] mt-[100px]'>
-          <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug">Edit Profile</p>
+        <div className="flex flex-col items-center space-y-4 w-full sm:max-w-md md:max-w-lg lg:max-w-xl">
+          <h2 className="text-purple-500 text-4xl font-medium">Edit Profile</h2>
           <input
             type="text"
             name="firstname"
             value={formData.firstname}
             onChange={handleChange}
             placeholder="First Name"
-            className='border placeholder-black p-2 mb-[20px] mt-5 focus:outline-none focus:border-black w-[300px] rounded-2xl'
+            className="border p-2 rounded-lg w-full text-black focus:outline-none"
           />
           <input
             type="text"
             name="lastname"
             value={formData.lastname}
             onChange={handleChange}
-            placeholder="Last name"
-            className='border placeholder-black mb-[20px] focus:outline-none focus:border-black w-[300px] rounded-2xl'
+            placeholder="Last Name"
+            className="border p-2 rounded-lg w-full text-black focus:outline-none"
           />
           <input
             type="email"
@@ -165,21 +166,21 @@ const Admindetails = React.memo(() => {
             value={formData.email}
             onChange={handleChange}
             placeholder="Email"
-            className='border placeholder-black mb-[20px] focus:outline-none focus:border-black w-[300px] rounded-2xl'
+            className="border p-2 rounded-lg w-full text-black focus:outline-none"
           />
           <input
             type="file"
             name="image"
             onChange={handleImageChange}
-            className='border mb-[20px] placeholder-black focus:outline-none w-[300px] rounded-2xl'
+            className="border p-2 bg-white text-black rounded-lg w-full"
           />
           <button
-            className='inline-block w-[300px] pt-3 text-xl font-medium text-center text-white bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-2xl transition duration-200 hover:bg-white hover:text-black ease'
             onClick={handleUpdate}
+            className="w-full px-4 py-2  bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded-lg transition duration-200 hover:bg-white hover:text-black text-xl"
           >
             Save Changes
           </button>
-          <button onClick={handleEditToggle} className="text-white mt-4">Cancel</button>
+          <button onClick={handleEditToggle} className="text-white mt-2">Cancel</button>
         </div>
       )}
     </div>

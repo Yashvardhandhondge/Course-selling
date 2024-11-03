@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useMemo } from 'react';
 import { adminAPI } from '../../services/adminApi';
 import { compressImage } from '../../utlis/imageCompressionHelper';
 import { Link, useNavigate } from 'react-router-dom';
@@ -60,26 +60,26 @@ const AdminSignup = React.memo(() => {
   }, [formData, navigate]);
 
   return (
-    <div className="bg-black h-screen">
-      <div className='flex p-4'>
-        <Link to='/' className='flex'>
-          <PiBasketballBold className='text-blue-400 text-5xl p-2' />
-          <p className="text-3xl mt-[5px] mb-[20px] text-white font-bold">Koursely</p>
+    <div className=" h-full min-h-screen   bg-black">
+      <div className='flex p-4 items-center justify-center sm:justify-start'>
+        <Link to='/' className='flex items-center space-x-2'>
+          <PiBasketballBold className='text-blue-400 text-4xl p-1 sm:p-2 lg:p-0' />
+          <p className="text-2xl sm:text-3xl text-white font-poppins font-bold">Koursely</p>
         </Link>
       </div>
 
-      <div className="">
+      
         <div className="flex">
           <div>
             <div className="flex flex-col items-center justify-center w-full h-full relative lg:pr-10">
               <img
                 src="https://static.vecteezy.com/system/resources/thumbnails/047/732/611/large/glowing-looping-world-teacher-day-children-giving-flowers-and-gifts-to-a-smiling-teacher-neon-frame-effect-black-background-free-video.jpg"
-                className="btn-"
+                className="hideen sm:block lg:w-3/4 xl:w-full"
                 alt="Sign up illustration"
               />
             </div>
           </div>
-          <div className="w-full mt-20 mr-0 mb-0 ml-0 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+          <div className="w-full mt-20 mr-0 mb-0 ml-14 sm:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
             <div className="flex flex-col items-start justify-start pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
               <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug">Sign up as Educator</p>
               {message && <div className="text-green-600 dark:text-green-400 mb-4">{message}</div>}
@@ -153,7 +153,7 @@ const AdminSignup = React.memo(() => {
           </div>
         </div>
       </div>
-    </div>
+    
   );
 });
 

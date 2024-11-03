@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { wishlistAPI } from '../../services/wishlistAPI';
 import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai';
 
-const CourseCard = React.memo(({ course, wishlist, onUpdateWishlist }) => {
+const CourseCard = React.memo(({ course, wishlist=[], onUpdateWishlist }) => {
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
 
@@ -22,8 +22,8 @@ const CourseCard = React.memo(({ course, wishlist, onUpdateWishlist }) => {
             } else {
                 await wishlistAPI.addToWishlist({ courseId: course._id }, token);
             }
-            onUpdateWishlist(); // Refresh wishlist in the parent component
-            setIsWishlisted(!isWishlisted); // Toggle local isWishlisted state
+            onUpdateWishlist();
+            setIsWishlisted(!isWishlisted); 
         } catch (error) {
             console.error("Error updating wishlist:", error);
         }

@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import HomePage from './components/Home/HomePage';
-// import SignUp from './components/SignUp';
+
 import Signin from './components/User/Signin'
 import AdminSignup from './components/Admin/AdminSignup';
 import AdminSignin from './components/Admin/AdminSigin';
@@ -20,6 +20,10 @@ import CourseDetailsPage from './components/User/CourseDeatilsPage';
 import UserProfile from './components/User/UserProfile';
 import EditUserProfile from './components/User/Edits';
 import UserDashboard from './components/User/Dashboard';
+import Card from './components/Admin/Card';
+import CreatedCourses from './components/Admin/CreatedCourses';
+import PurchasedCourses from './components/User/PurchasedCourses';
+import Wishlist from './components/User/Wishlist';
 function App() {
   return (
   
@@ -64,6 +68,10 @@ function App() {
          element={authService.isAuthenticated()? <Navigate to='/' />:<CourseDetails/>}
          ></Route>
          <Route
+         path="/admin/courses"
+         element={authService.isAuthenticated()? <Navigate to='/' />:<CreatedCourses/>}
+         ></Route>
+         <Route
          path='/admin/add-lesson/:courseId'
          
          element={authService.isAuthenticated() ? <Navigate to='/'/>:<AddLessons/> }
@@ -88,8 +96,18 @@ function App() {
          >
          </Route>
          <Route
-         path='user/dashboard'
+         path='/user/dashboard'
          element={authService.isAuthenticated() ? <Navigate to='/'/>: <UserDashboard/>}
+         >
+         </Route>
+         <Route
+         path='/user/purchased'
+         element={authService.isAuthenticated() ? <Navigate to='/' /> : <PurchasedCourses/>}
+         >
+         </Route>
+         <Route
+         path='/user/wishlist'
+         element={authService.isAuthenticated() ? <Navigate to='/' /> : <Wishlist/>}
          >
          </Route>
         </Routes>

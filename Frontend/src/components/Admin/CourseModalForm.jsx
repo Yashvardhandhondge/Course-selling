@@ -3,11 +3,12 @@ import { adminAPI } from '../../services/adminApi';
 import { compressImage } from '../../utlis/imageCompressionHelper';
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
-
+import Fetchadmin from './fetchadmin';
+import Chatbot from '../Home/Chatbot';
 function CourseFormModal() {
   const token = localStorage.getItem('token');
   
-  // State for form data
+  
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -91,12 +92,16 @@ function CourseFormModal() {
   };
 
   return (
-    <div className="w-screen h-screen bg-black p-4 font-[Poppins]">
+    <div className="flex">
       <Navbar />
+      <div className="flex-grow h-screen bg-black p-4 font-poppins ml-64">
       <div className="w-full h-full bg-black overflow-y-auto p-8">
+        <div className='flex justify-between'>
         <h2 className="text-3xl font-semibold mb-6 text-purple-500">
           Create Course
         </h2>
+        <Fetchadmin/>
+        </div>
         <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <input type="text" name="title" value={formData.title} onChange={handleChange} placeholder="Title" className="w-full bg-white placeholder-black text-black p-3 border rounded" />
           <input type="text" name="price" value={formData.price} onChange={handleChange} placeholder="Price" className="w-full bg-white placeholder-black text-black p-3 border rounded" />
@@ -145,13 +150,15 @@ function CourseFormModal() {
               </div>
             ))}
             <Link to='/admin/landing'>
-              <button onClick={handleAddLessons} className="mt-6 h-10 w-44 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white hover:text-white hover:bg-black border border-solid rounded px-4 py-2">
+              <button onClick={handleAddLessons} className="rounded-2xl mt-6 h-10 w-44 bg-gradient-to-r from-violet-500 to-fuchsia-500 text-white hover:text-white hover:bg-black border border-solid  px-4 py-2">
                 Add Lessons
               </button>
             </Link>
           </div>
         )}
       </div>
+    </div>
+    <Chatbot/>
     </div>
   );
 }

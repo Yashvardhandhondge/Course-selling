@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { courseAPI } from '../../services/courseAPI'; 
-
+import Chatbot from '../Home/Chatbot';
 const PaymentConfirmation = () => {
     const navigate = useNavigate();
     const location = useLocation(); 
@@ -56,6 +56,7 @@ const PaymentConfirmation = () => {
                     No
                 </button>
             </div>
+            <Chatbot/>
         </div>
     );
 };

@@ -1,14 +1,17 @@
 import React from 'react'
-import ProfileNav from './ProfileNav'
+import AdminNavbar from './Navbar'
 import Admindetails from './Admindetails'
 import Chatbot from '../Home/Chatbot'
 function AdminProfile() {
   return (
-   <div className='w-full h-screen bg-black' >
-       <ProfileNav />
-       <div className='border-t-[1px] border-zinc-700 mt-2 flex justify-center '></div>
+    <div className="flex">
+      <AdminNavbar />
+      <div className="flex-grow min-h-screen bg-black p-4 font-poppins ml-64">
+        <div className="flex justify-between items-center mb-4">
        <Admindetails/>
        <Chatbot/>
+   </div>
+   </div>
    </div>
   )
 }

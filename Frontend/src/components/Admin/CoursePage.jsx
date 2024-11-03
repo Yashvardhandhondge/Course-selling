@@ -1,8 +1,9 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { adminAPI } from "../../services/adminApi";
-import { PiBasketballBold } from "react-icons/pi";
-
+import Fetchadmin from "./fetchadmin";
+import AdminNavbar from "./Navbar";
+import Chatbot from "../Home/Chatbot";
 export default function CourseDetails() {
     const { courseId } = useParams();
     const [course, setCourse] = useState(null);
@@ -57,17 +58,16 @@ export default function CourseDetails() {
     if (!course) return <p className="text-white font-poppins">Loading...</p>;
 
     return (
-        <div className="p-8 bg-black font-poppins min-h-screen text-purple-500">
-            <div className='flex'>
-                <Link to='/admin/landing' className='flex'>
-                    <PiBasketballBold className='text-blue-400 text-5xl p-2' /> 
-                    <p className="text-3xl mt-[5px] mb-[20px] text-white font-bold">Koursely</p>
-                </Link>
+        <div className="flex text-purple-700">
+            <AdminNavbar/>
+            <div className="flex-grow min-h-screen bg-black p-4 font-poppins ml-64">
+            <div className="flex justify-end items-center  mb-4">
+            <Fetchadmin/>
             </div>
             <div className="flex">
-                <img src={course.imageUrl} alt={course.title} className="w-52 h-auto rounded mb-4" />
+                <img src={course.imageUrl} alt={course.title} className="w-52 h-72 rounded-2xl mb-4" />
                 <div className="ml-5">
-                    <h2 className="text-3xl font-bold mb-2">{course.title}</h2>
+                    <h2 className="text-3xl  font-bold mb-2">{course.title}</h2>
                     <p className="mt-2">Price: {course.price}</p>
                     <p className="mt-4">{course.description}</p>
                     <p className="text-sm mt-2">Category: {course.category}</p>
@@ -127,6 +127,8 @@ export default function CourseDetails() {
                     Delete Course
                 </button>
             </div>
+        </div>
+        <Chatbot/>
         </div>
     );
 }

@@ -23,7 +23,7 @@ const CourseCard = () => {
     }, []);
 
     return (
-        <div className="bg-black text-purple-500 font-poppins p-10 flex flex-wrap gap-6">
+        <div className="bg-black text-purple-500 font-poppins p-10 flex flex-wrap justify-center gap-6">
             {courses.map((course) => (
                 <Link to={`/admin/course/${course._id}`} key={course._id}>
                     <div
@@ -38,6 +38,10 @@ const CourseCard = () => {
                             <h3 className="text-lg font-semibold">{course.title}</h3>
                             <p className="text-md">Price: {course.price}</p>
                             <p className="text-sm">Description: {course.description}</p>
+                            <br />
+                            <button className="px-4 py-2 text-white rounded-2xl border border-solid bg-gradient-to-r from-violet-500 to-fuchsia-500">
+                                View Course
+                            </button>
                         </div>
                     </div>
                 </Link>

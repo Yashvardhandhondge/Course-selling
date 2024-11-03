@@ -59,37 +59,47 @@ const Signup = React.memo(() => {
   }, [formData, navigate]);
 
 
-  const inputClass = useMemo(() => "ml-[40px] w-[250px] px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-black font-serif text-sm focus:outline-none focus:border-gray-400", []);
-  const buttonClass = useMemo(() => "ml-[155px] mt-4 w-[250px] py-4 rounded-lg font-semibold bg-purple-500 cursor-pointer text-gray-100 hover:bg-purple-700 transition-all duration-300 ease-in-out flex items-center justify-center focus:outline-none", []);
+  const inputClass = useMemo(() => "border placeholder-black focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 text-base block bg-white border-gray-300 rounded-2xl", []);
+  const buttonClass = useMemo(() => "mt-8 inline-block w-[300px] pt-3 pr-2 pb-3 pl-2 mt-1 text-xl font-medium text-center text-white bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:scale-95 transition-transform transform rounded-2xl duration-200 hover:bg-white hover:text-black border-solid ease", []);
   
   return (
-    <div className="min-h-screen w-full bg-[#2E0249] text-white flex justify-center font-poppins">
-      <div className="flex-1 text-center hidden lg:flex">
-        <div className="ml-[100px] xl:m-16 mr-[300px] w-[600px] bg-contain bg-center bg-no-repeat"
-          style={{ backgroundImage: 'url(https://pbs.twimg.com/media/GbPcJ7kakAAEmRy?format=png&name=900x900)' }}
-        ></div>
-      </div>
-      <div className="lg:w-1/2 xl:w-5/12 mr-[100px] mt-10 p-6 sm:p-10">
-        <div className='flex'>
-          <PiBasketballBold className='text-3xl ml-[170px] mt-1 text-blue-400' />
-          <p className="text-4xl font-serif ml-[10px] text-white">Koursely</p>
-        </div>
-
-        <h1 className='ml-[210px] text-2xl xl:text-3xl font-extrabold mt-[10px] font-serif'>Sign Up</h1>
-        <form className="w-full flex-1 mt-8" onSubmit={handleSubmit}>
+    <div className=" h-full min-h-screen bg-[#2E0249] font-poppins">
+    <div className='flex p-4 items-center justify-center sm:justify-start'>
+      <Link to='/' className='flex items-center space-x-2'>
+        <PiBasketballBold className='text-blue-400 text-4xl p-1 sm:p-2 lg:p-0' />
+        <p className="text-2xl sm:text-3xl text-white font-poppins font-bold">Koursely</p>
+      </Link>
+    </div>
+    <div className="flex">
+          <div>
+            <div className="flex flex-col items-center justify-center w-full h-full relative lg:pr-10">
+              <img
+                src="https://pbs.twimg.com/media/GbPpiUDakAAlvJ4?format=png&name=900x900"
+                className="hideen sm:block lg:w-3/4 xl:w-full"
+                alt="Sign up illustration"
+              />
+            </div>
+          </div>
+          <div className="w-full mt-20 mr-0 mb-0 ml-14 sm:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+            <div className="flex flex-col items-start justify-start pr-10 pb-10 pl-10  shadow-2xl rounded-xl relative z-10">
+              <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug">Sign up</p>
+       
           {message && <div className="text-purple-600 mb-4">{message}</div>}
           {error && <div className="text-red-600 mb-4">{error}</div>}
           
-          <div className="mx-auto max-w-xs space-y-6">
+          <div className="w-[300] relative space-y-8">
+                <div className="relative">
             <input
               name="firstname"
               type="text"
               value={formData.firstname}
               onChange={handleChange}
-              className={inputClass}
+               className="border placeholder-black focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-5 text-base block bg-white border-gray-300 rounded-2xl"
               placeholder="Enter first name"
               required
             />
+            </div>
+            <div className="relative">
             <input
               name="lastname"
               type="text"
@@ -99,6 +109,7 @@ const Signup = React.memo(() => {
               placeholder="Enter last name"
               required
             />
+            </div>
             <input
               name="email"
               type="email"
@@ -114,6 +125,7 @@ const Signup = React.memo(() => {
               value={formData.password}
               onChange={handleChange}
               className={inputClass}
+              
               placeholder="Enter password"
               required
             />
@@ -133,8 +145,10 @@ const Signup = React.memo(() => {
             Already have an account? 
             <Link to="/signin" className="text-purple-500 border-b border-purple-500 border-dotted"> Sign In </Link>
           </p>
-        </form>
+
       </div>
+    </div>
+    </div>
     </div>
   );
 });

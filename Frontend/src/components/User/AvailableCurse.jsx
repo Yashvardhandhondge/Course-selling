@@ -5,6 +5,7 @@ import Search from './Search';
 import debounce from 'lodash.debounce'; 
 import ProfileShortcut from './Profile';
 
+
 const MyCoursesPage = () => {
     const [myCourses, setMyCourses] = useState([]);
     const [searchTerm, setSearchTerm] = useState('');
@@ -39,6 +40,7 @@ const MyCoursesPage = () => {
     return (
         <div className="container mx-auto">
             <div className='flex justify-between'>
+           
                 <h1 className="text-2xl font-bold text-white font-poppins mb-4">Purchased Courses</h1>
                 <Search onSearch={debouncedSearch} />
                 <Profileshortcut />

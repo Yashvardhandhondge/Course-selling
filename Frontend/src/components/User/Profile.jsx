@@ -23,9 +23,15 @@ function Profileshortcut() {
         <div>
             <Link to="/user/profile" className="flex items-center text-white py-2 px-3 rounded">
                 {userData?.image && (
-                    <img src={userData.image} alt="User Avatar" className="rounded-full w-10 h-10 mr-2 border border-white" />
+                    <img 
+                        src={userData.image} 
+                        alt="User Avatar" 
+                        className="rounded-full w-10 h-10 border mr-2" 
+                    />
                 )}
-                <span className="font-poppins">{userData ? userData.firstname : 'Loading...'}</span>
+                <span className="font-poppins ml-2 hidden sm:inline">
+                    {userData ? userData.firstname : 'Loading...'}
+                </span>
             </Link>
         </div>
     );

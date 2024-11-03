@@ -2,7 +2,7 @@ import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { userAPI } from '../../services/userAPI';
 import { compressImage } from '../../utlis/imageCompressionHelper';
-import UserNav from './ProfileNav';
+import Sidebar from './Sliderbar';
 
 const UserProfile = React.memo(() => {
   const navigate = useNavigate();
@@ -118,83 +118,110 @@ const UserProfile = React.memo(() => {
     }
   }, [formData.email, navigate]);
 
+  
+  const handleLogout = useCallback(() => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('userId');
+      navigate('/');
+  }, [navigate]);
+
   return (
-    <div className='bg-gradient-to-r from-black to-[#2E0249] h-full flex'>
-      <UserNav />
-      <div className='flex-1 flex justify-center items-start'>
+    <div className="flex min-h-screen bg-gradient-to-r from-black to-[#2E0249]">
+            <Sidebar handleLogout={handleLogout} />
+      
         {profile && !isEditing ? (
-          <div className='text-purple-600 bg-gradient-to-r from-black to-[#2E0249] flex flex-col items-center p-8 w-full max-w-md'>
-            <img src={profile.image} className='h-[200px] w-[200px] rounded-full' alt="Profile" />
-            <div className='mt-6 text-center'>
-              <h2 className='text-4xl text-purple-500 font-poppins'>{`${profile.firstname} ${profile.lastname}`}</h2>
-              <p className='text-xl text-purple-600'>Email: <span className='text-purple-500'>{profile.email}</span></p>
-              <p className='text-xl text-purple-600'>Created At: <span className='text-purple-500'>{formattedCreatedAt}</span></p>
-              <p className='text-xl text-purple-600'>Updated At: <span className='text-purple-500'>{formattedUpdatedAt}</span></p>
-              <div className='flex mt-4'>
-                <button
-                  onClick={handleEditToggle}
-                  className="text-black hover:scale-95 transition-transform py-2 px-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 w-32 hover:text-purple-600 hover:bg-black border hover:border-purple-text-purple-600 border-blue-400"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handleDelete}
-                  className="ml-4 text-black hover:scale-95 transition-transform py-2 px-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 w-32 hover:text-purple-600 hover:bg-black border hover:border-purple-text-purple-600 border-blue-400"
-                >
-                  Delete
-                </button>
-              </div>
-            </div>
-          </div>
+
+<div className="flex justify-center items-center  ml-0 sm:ml-[10px] lg:ml-[300px]   p-4">
+<div className="text-purple-600 flex flex-col items-center p-4 sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg">
+    <img
+        src={profile.image}
+        className="h-24 w-24 sm:h-32 sm:w-32 md:h-40 md:w-40 rounded-full object-cover"
+        alt="Profile"
+    />
+    <div className="mt-4 sm:mt-6 text-center">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl text-purple-500 font-poppins">
+            {`${profile.firstname} ${profile.lastname}`}
+        </h2>
+        <p className="text-md sm:text-lg md:text-xl mt-2 sm:mt-4 text-purple-600">
+            Email: <span className="text-purple-500">{profile.email}</span>
+        </p>
+        <p className="text-md sm:text-lg md:text-xl text-purple-600">
+            Created At: <span className="text-purple-500">{formattedCreatedAt}</span>
+        </p>
+        <p className="text-md sm:text-lg md:text-xl text-purple-600">
+            Updated At: <span className="text-purple-500">{formattedUpdatedAt}</span>
+        </p>
+        <div className="flex mt-4 space-x-4">
+            <button
+                onClick={handleEditToggle}
+                className="text-sm md:text-base text-black hover:scale-95 transition-transform py-1 sm:py-2 px-3 sm:px-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 w-24 sm:w-28 md:w-32 hover:text-purple-600 hover:bg-black border border-blue-400"
+            >
+                Edit
+            </button>
+            <button
+                onClick={handleDelete}
+                className="text-sm md:text-base text-black hover:scale-95 transition-transform py-1 sm:py-2 px-3 sm:px-4 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 w-24 sm:w-28 md:w-32 hover:text-purple-600 hover:bg-black border border-blue-400"
+            >
+                Delete
+            </button>
+        </div>
+    </div>
+</div>
+</div>
+
+        
         ) : (
-          <div className='flex flex-col items-start p-8 w-full max-w-md'>
-            <h2 className="text-purple-500 text-3xl font-medium mb-4">Edit Profile</h2>
-            <input
-              type="text"
-              name="firstname"
-              value={formData.firstname}
-              onChange={handleChange}
-              placeholder="First Name"
-              className='border placeholder-black p-2 mb-4 font-poppins focus:outline-none focus:border-black w-full rounded-2xl'
-            />
-            <input
-              type="text"
-              name="lastname"
-              value={formData.lastname}
-              onChange={handleChange}
-              placeholder="Last Name"
-              className='border placeholder-black p-2 mb-4 font-poppins focus:outline-none focus:border-black w-full rounded-2xl'
-            />
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              placeholder="Email"
-              className='border placeholder-black p-2 mb-4 font-poppins focus:outline-none focus:border-black w-full rounded-2xl'
-            />
-            <input
-              type="file"
-              name="image"
-              onChange={handleImageChange}
-              className='border bg-white mb-4 placeholder-black font-poppins focus:outline-none focus:border-black w-full rounded-2xl'
-            />
-            <button
-              className='text-black w-full py-2 mt-1 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-purple-text-purple-600 hover:text-black transition duration-200'
-              onClick={handleUpdate}
-            >
-              Save Changes
-            </button>
-            <button
-              onClick={handleEditToggle}
-              className='text-black text-lg border bg-red-200 w-full py-2 rounded-2xl mt-2 font-poppins'
-            >
-              Cancel
-            </button>
+          <div className="flex items-center justify-center min-h-screen ml-0 sm:ml-1 md:ml-[150px] lg:ml-[300px]  p-4">
+          <div className="flex flex-col items-center p-4 sm:p-6 md:p-8 w-full max-w-xs sm:max-w-sm md:max-w-md">
+              <h2 className="text-purple-500 text-2xl sm:text-3xl font-medium mb-4 text-center">Edit Profile</h2>
+              <input
+                  type="text"
+                  name="firstname"
+                  value={formData.firstname}
+                  onChange={handleChange}
+                  placeholder="First Name"
+                  className="border placeholder-black text-sm sm:text-base p-2 mb-3 sm:mb-4 font-poppins focus:outline-none focus:border-black w-full rounded-2xl"
+              />
+              <input
+                  type="text"
+                  name="lastname"
+                  value={formData.lastname}
+                  onChange={handleChange}
+                  placeholder="Last Name"
+                  className="border placeholder-black text-sm sm:text-base p-2 mb-3 sm:mb-4 font-poppins focus:outline-none focus:border-black w-full rounded-2xl"
+              />
+              <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  placeholder="Email"
+                  className="border placeholder-black text-sm sm:text-base p-2 mb-3 sm:mb-4 font-poppins focus:outline-none focus:border-black w-full rounded-2xl"
+              />
+              <input
+                  type="file"
+                  name="image"
+                  onChange={handleImageChange}
+                  className="border bg-white text-sm sm:text-base p-2 mb-3 sm:mb-4 placeholder-black font-poppins focus:outline-none focus:border-black w-full rounded-2xl"
+              />
+              <button
+                  className="text-sm sm:text-base w-full py-2 mt-1 rounded-2xl bg-gradient-to-r from-violet-500 to-fuchsia-500 hover:bg-purple-text-purple-600 hover:text-black transition duration-200"
+                  onClick={handleUpdate}
+              >
+                  Save Changes
+              </button>
+              <button
+                  onClick={handleEditToggle}
+                  className="text-sm sm:text-base text-black border bg-red-200 w-full py-2 rounded-2xl mt-2 font-poppins"
+              >
+                  Cancel
+              </button>
           </div>
+      </div>
+      
         )}
       </div>
-    </div>
+     
   );
 });
 
