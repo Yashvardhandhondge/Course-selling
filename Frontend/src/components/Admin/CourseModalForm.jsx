@@ -3,7 +3,7 @@ import { adminAPI } from '../../services/adminApi';
 import { compressImage } from '../../utlis/imageCompressionHelper';
 import Navbar from './Navbar';
 import { Link } from 'react-router-dom';
-import Fetchadmin from './fetchadmin';
+import Fetchadmin from './FetchAdmin';
 import Chatbot from '../Home/Chatbot';
 function CourseFormModal() {
   const token = localStorage.getItem('token');
