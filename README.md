@@ -1,4 +1,4 @@
-```markdown
+
 # Koursely - Course Selling App
 
 Koursely is a feature-rich course-selling application where users can browse, purchase, review, and complete courses. The app also allows users to manage their accounts, create wishlists, and watch course videos. Admins have full control over course management and user data.
