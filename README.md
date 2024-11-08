@@ -102,4 +102,3 @@ Koursely is a robust platform for course sellers and learners, enabling seamless
 ---
 
 Enjoy using Koursely! If you encounter any issues, feel free to open an issue on GitHub.
-```
