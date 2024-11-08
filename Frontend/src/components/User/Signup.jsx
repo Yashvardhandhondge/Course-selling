@@ -75,14 +75,14 @@ const Signup = React.memo(() => {
             <div className="flex flex-col items-center justify-center w-full h-full relative lg:pr-10">
               <img
                 src="https://pbs.twimg.com/media/GbPpiUDakAAlvJ4?format=png&name=900x900"
-                className="hideen sm:block lg:w-3/4 xl:w-full"
+                className="hideen sm:block lg:w-3/4 xl:w-full h-[650px] "
                 alt="Sign up illustration"
               />
             </div>
           </div>
-          <div className="w-full mt-20 mr-0 mb-0 ml-14 sm:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+          <div className="w-full mt-20 mr-0 mb-0 ml-0 sm:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
             <div className="flex flex-col items-start justify-start pr-10 pb-10 pl-10  shadow-2xl rounded-xl relative z-10">
-              <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug">Sign up</p>
+              <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium ml-20 sm:ml-20 lg:ml-0  leading-snug">Sign up</p>
        
           {message && <div className="text-purple-600 mb-4">{message}</div>}
           {error && <div className="text-red-600 mb-4">{error}</div>}
@@ -94,7 +94,7 @@ const Signup = React.memo(() => {
               type="text"
               value={formData.firstname}
               onChange={handleChange}
-               className="border placeholder-black focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-5 text-base block bg-white border-gray-300 rounded-2xl"
+               className="border placeholder-black  focus:outline-none focus:border-black w-[300px] pt-3 pr-2 pb-3 pl-2 mt-5 text-base block bg-white border-gray-300 rounded-2xl"
               placeholder="Enter first name"
               required
             />

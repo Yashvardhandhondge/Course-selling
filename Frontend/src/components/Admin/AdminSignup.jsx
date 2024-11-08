@@ -79,9 +79,9 @@ const AdminSignup = React.memo(() => {
               />
             </div>
           </div>
-          <div className="w-full mt-20 mr-0 mb-0 ml-14 sm:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+          <div className="w-full mt-20 mr-0 mb-0 ml-0 sm:ml-0 lg:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
             <div className="flex flex-col items-start justify-start pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
-              <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug">Sign up as Educator</p>
+              <p className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug ml-14 sm:ml-14 lg:ml-0">Sign up as Educator</p>
               {message && <div className="text-green-600 dark:text-green-400 mb-4">{message}</div>}
               {error && <div className="text-red-600 dark:text-red-400 mb-4">{error}</div>}
               <div className="w-[300] relative space-y-8">

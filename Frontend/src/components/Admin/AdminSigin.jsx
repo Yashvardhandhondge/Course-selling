@@ -56,7 +56,7 @@ const AdminSignin = () => {
 
       <div className="flex">
       <div>
-        <div className="flex flex-col items-center justify-center w-full h-full relative lg:pr-10">
+        <div className="flex flex-col items-center mt-16 justify-center w-full h-full relative lg:pr-10">
           <img
             src="https://static.vecteezy.com/system/resources/thumbnails/047/732/611/large/glowing-looping-world-teacher-day-children-giving-flowers-and-gifts-to-a-smiling-teacher-neon-frame-effect-black-background-free-video.jpg"
             className="hideen sm:block lg:w-3/4 xl:w-full"
@@ -66,8 +66,8 @@ const AdminSignin = () => {
         </div>
 
 
-        <div className="w-full mt-20 mr-0 mb-0 ml-14 sm:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
-          <div className="flex flex-col items-start justify-start pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
+        <div className="w-full mt-20 mr-0 mb-0 ml-0 sm:ml-0  lg:ml-14 relative z-10 max-w-2xl lg:mt-0 lg:w-5/12">
+          <div className="flex  flex-col items-start justify-start pr-10 pb-10 pl-10 bg-black shadow-2xl rounded-xl relative z-10">
             <h1 className="w-full text-purple-500 mr-[900px] text-4xl font-medium leading-snug mb-[20px]">Sign In</h1>
             <form onSubmit={handleSubmit} className="space-y-8">
               {message && <div className="text-green-600 mb-4">{message}</div>}

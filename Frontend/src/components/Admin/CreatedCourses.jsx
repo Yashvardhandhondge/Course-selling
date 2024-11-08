@@ -8,7 +8,7 @@ function CreatedCourses() {
   
     <div className="flex">
       <AdminNavbar />
-      <div className="flex-grow  h-screen bg-black p-4 font-poppins text-white font-boldml-12 lg:ml-64">
+      <div className="flex-grow  h-screen bg-black p-4 font-poppins text-white font-boldml-12 lg:ml-52">
         <div className='flex text-bold font-bold  justify-between'>
            <p className='text-xl'>Created Courses :</p> 
             <Fetchadmin/>

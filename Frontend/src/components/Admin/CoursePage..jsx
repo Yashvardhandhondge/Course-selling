@@ -60,7 +60,7 @@ export default function CourseDetails() {
     return (
         <div className="flex text-purple-700">
             <AdminNavbar/>
-            <div className="flex-grow min-h-screen bg-black p-4 font-poppins ml-12 lg:ml-64">
+            <div className="flex-grow min-h-screen bg-black p-4 font-poppins ml-12 lg:ml-52">
             <div className="flex justify-end items-center  mb-4">
             <Fetchadmin/>
             </div>
