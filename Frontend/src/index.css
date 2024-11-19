@@ -38,3 +38,6 @@ body {
 .dark:text-neutral-100 {
   color: #ffffff;
 }
+html, body {
+  overflow-x: hidden;
+}
