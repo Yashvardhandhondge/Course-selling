@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { CiCircleChevDown } from "react-icons/ci";
 import Chatbot from './Chatbot';
 import About from './About';
 import Admin from './Admin';
+import {InfoSection,Features,Footer,ScrollIndicator} from './Info'
+
 import { PiBasketballBold } from "react-icons/pi";
+import {motion,useAnimation,useScroll} from 'framer-motion';
+import { ChevronDown, BookOpen, Users, Edit, Star, Zap, Globe, Award, ArrowDown } from 'lucide-react'
 
 import Student from './Student';
 function HomePage()  {
@@ -23,10 +27,15 @@ function HomePage()  {
            <Student />
                 </div>
 </div>
+<ScrollIndicator/>
                 <div className='text-white'>
                     <About />
                 </div>
                 <Chatbot/>
+                <InfoSection/>
+                <Features />
+                <Footer />
+                
         </div>
     );
 };

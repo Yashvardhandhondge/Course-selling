@@ -1,33 +1,52 @@
-import React from 'react';
+
 import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react'
+import { motion, useAnimation, useScroll } from 'framer-motion'
+import { ChevronDown, BookOpen, Users, Edit, Star, Zap, Globe, Award, ArrowDown } from 'lucide-react'
 
 const About = React.memo(() => {
   return (
-    <div className='flex flex-col lg:flex-row justify-between items-center lg:items-start'>
-      <div className='m-6 lg:m-[100px] h-full text-center lg-text-left'>
-        <p className='font-poppins text-3xl sm:text-5xl lg:text-7xl p-2'>Explore Live</p>
-        <p className='font-poppins text-3xl sm:text-5xl lg:text-7xl p-2'>Creative classes</p>
-        <p className='mt-2 mx-4 lg:mx-3 font-poppins text-sm sm:text-base lg:text-lg'>Choose from over 2,000+ courses on topics like Web Development, DSA,</p>
-        <p className='p-1 mx-4 lg:ml-2 font-poppins text-sm sm:text-base lg:text-lg'>DevOps, Web3 & many more ..</p>
-        <br />
-        <div className=' flex flex-col sm:flex-row items-center justify-center lg:justify-start space-y-4 sm:space-y-0 sm:space-x-4 '>
-        <Link to="/signup" className=' px-4 py-2 font-poppins hover:bg-black hover:text-white font-semibold border rounded border-solid bg-purple-400 text-black ml-0 sm:ml-1 md:ml-2 lg:ml-40'>
+    <>    <section className=" text-white   max-w-screen min-h-[650px] sm:min-h-[650px] lg:min-h-[550px] flex justify-center items-center">
+    <div className=" container mx-auto text-center">
+      <motion.h1
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="text-5xl font-bold mb-4"
+      >
+        Ready to Deep Dive into Learning?
+      </motion.h1>
+      <motion.p
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+        className="text-xl mb-8"
+      >
+        Explore, Learn, and Grow with Koursely
+      </motion.p>
+      <motion.div
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
+        <button onClick={() => smoothScroll('#info')} className="bg-white text-purple-900 px-6 py-3 rounded-full font-bold mr-4 hover:bg-purple-100 transition duration-300 transform hover:scale-105">
+          <Link to="/signup" >
           Get Started
         </Link>
-        <Link to="/" className='border rounded border-solid px-4 py-2 hover:bg-purple-400 hover:text-black font-poppins font-semibold transform-transition'>
+        </button>
+        <button onClick={() => smoothScroll('#features')} className="border border-white text-white px-6 py-3 rounded-full font-bold hover:bg-white hover:text-purple-900 transition duration-300 transform hover:scale-105">
+           <Link to="/" >
           Learn more
         </Link>
-        </div>
-      </div>
-
-      <div className='hidden lg:flex mt-8 lg:mt-[100px] lg:mr-28 justify-center lg:justify-end'>
-        <img 
-          src="https://pbs.twimg.com/media/GbR2CYzakAIelxz?format=jpg&name=medium" 
-          className='rounded w-[600px] h-[400px] text-black bg-black'
-          alt="" 
-        />
-      </div>
+        </button>
+      </motion.div>
     </div>
+     
+  </section>
+
+    
+    </>
+
   );
 });
 
