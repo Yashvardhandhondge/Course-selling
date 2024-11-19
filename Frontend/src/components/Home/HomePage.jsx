@@ -27,7 +27,7 @@ function HomePage()  {
            <Student />
                 </div>
 </div>
-<ScrollIndicator/>
+{/* <ScrollIndicator/> */}
                 <div className='text-white'>
                     <About />
                 </div>
