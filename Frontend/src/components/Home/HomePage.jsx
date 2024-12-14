@@ -1,35 +1,31 @@
 import React, { useState,useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import { CiCircleChevDown } from "react-icons/ci";
 import Chatbot from './Chatbot';
 import About from './About';
 import Admin from './Admin';
 import {InfoSection,Features,Footer,ScrollIndicator} from './Info'
-
 import { PiBasketballBold } from "react-icons/pi";
-import {motion,useAnimation,useScroll} from 'framer-motion';
-import { ChevronDown, BookOpen, Users, Edit, Star, Zap, Globe, Award, ArrowDown } from 'lucide-react'
-
 import Student from './Student';
-function HomePage()  {
+
+
+   function HomePage()  {
     
    
-    return (
-        <div className='w-screen min-h-screen bg-gradient-to-r from-black to-[#2E0249]  '>
+      return (
+          <div className='w-screen min-h-screen bg-gradient-to-r from-black to-[#2E0249]  '>
             <div className='flex justify-between items-center p-4 md:p-6 lg:p-8'>
-            <div className="text-4xl flex text-white font-poppins    font-extrabold ml-0 sm:ml-4 md:ml-10 lg:ml-14  ">
+            <div className="text-4xl flex text-white font-poppins font-extrabold ml-0 sm:ml-4 md:ml-10 lg:ml-14  ">
                 
             <PiBasketballBold className='mr-2 text-blue-500 font-poppins h-5 sm:h-5 md:h-8 lg:h-10 ' /> 
             <span className='text-sm sm:text-sm md:text-3xl lg:text-4xl '>Koursely</span>  
             </div>
            <div className='flex justify-center  space-x-4 sm:space-x-6 md:space-x-8 lg:space-x-10'>
                 <Admin/>
-           <Student />
+                <Student />
                 </div>
-</div>
-{/* <ScrollIndicator/> */}
+            </div>
+                {/* <ScrollIndicator/> */}
                 <div className='text-white'>
-                    <About />
+                <About />
                 </div>
                 <Chatbot/>
                 <InfoSection/>
